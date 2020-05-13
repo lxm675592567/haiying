@@ -11,7 +11,9 @@ public interface UserService {
 
     User findByOpenId(@NotNull String openId);
 
-    void updateUserInfo(@NotNull User user);
+    User updateUserInfo(@NotNull User user);
 
     void saveUserInfo(@NotNull User user);
+
+    User findOne(String guid);
 }

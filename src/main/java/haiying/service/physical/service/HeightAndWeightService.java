@@ -11,9 +11,11 @@ public interface HeightAndWeightService {
 
     List<HeightAndWeight> findHeightAndWeightList(JSONObject jsonObject);
 
-    HeightAndWeight getHeightAdnWeightTestResult(HeightAndWeight heightAndWeight);
+    //HeightAndWeight getHeightAdnWeightTestResult(HeightAndWeight heightAndWeight);
 
-    void saveOrEditHeightAndWeight(HeightAndWeight heightAndWeight);
+    HeightAndWeight saveOrEditHeightAndWeight(HeightAndWeight heightAndWeight);
 
     List<HeightAndWeight> findHeightAndWeightHistoryPagination(JSONObject jsonObject);
+
+    List<JSONObject> getHeightAndWeightDateCurve(String guid);
 }

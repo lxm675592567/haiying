@@ -11,11 +11,11 @@ public class User {
     public User() {
     }
 
-    public User(int userId, String openId, String unionId, String nickname, int gender, String country, String province, int city, String avatarUrl, Date createTime, int loginType) {
+    public User(String userId, String openId, String unionId, String nickName, int gender, String country, String province, String city, String avatarUrl, Date createTime, int loginType, Date birthday, String phone, String height, String menstruation) {
         this.userId = userId;
         this.openId = openId;
         this.unionId = unionId;
-        this.nickname = nickname;
+        this.nickName = nickName;
         this.gender = gender;
         this.country = country;
         this.province = province;
@@ -23,15 +23,19 @@ public class User {
         this.avatarUrl = avatarUrl;
         this.createTime = createTime;
         this.loginType = loginType;
+        this.birthday = birthday;
+        this.phone = phone;
+        this.height = height;
+        this.menstruation = menstruation;
     }
 
-    private int userId;    //主键id
+    private String userId;    //主键id
 
     private String openId;
 
     private String unionId;
 
-    private String nickname;  //姓名
+    private String nickName;  //姓名
 
     private int gender;    //性别 0未知 1男 2女
 
@@ -39,7 +43,7 @@ public class User {
 
     private String province; //省份
 
-    private int city;  //城市
+    private String city;  //城市
 
     private String avatarUrl;  //用户图片头像url
 
@@ -48,11 +52,21 @@ public class User {
 
     private int loginType;
 
-    public int getUserId() {
+    @JsonFormat(pattern = DateUtil.DATE_FMT, timezone = DateUtil.TIME_ZONE)
+    private Date birthday;      //出生日期
+
+    private String phone;       //手机号
+
+    private String height;    //身高
+
+    private String menstruation;  //末次月经
+
+
+    public String getUserId() {
         return userId;
     }
 
-    public User setUserId(int userId) {
+    public User setUserId(String userId) {
         this.userId = userId;
         return this;
     }
@@ -75,12 +89,12 @@ public class User {
         return this;
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getNickName() {
+        return nickName;
     }
 
-    public User setNickname(String nickname) {
-        this.nickname = nickname;
+    public User setNickName(String nickName) {
+        this.nickName = nickName;
         return this;
     }
 
@@ -111,11 +125,11 @@ public class User {
         return this;
     }
 
-    public int getCity() {
+    public String getCity() {
         return city;
     }
 
-    public User setCity(int city) {
+    public User setCity(String city) {
         this.city = city;
         return this;
     }
@@ -144,6 +158,42 @@ public class User {
 
     public User setLoginType(int loginType) {
         this.loginType = loginType;
+        return this;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public User setBirthday(Date birthday) {
+        this.birthday = birthday;
+        return this;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public User setPhone(String phone) {
+        this.phone = phone;
+        return this;
+    }
+
+    public String getHeight() {
+        return height;
+    }
+
+    public User setHeight(String height) {
+        this.height = height;
+        return this;
+    }
+
+    public String getMenstruation() {
+        return menstruation;
+    }
+
+    public User setMenstruation(String menstruation) {
+        this.menstruation = menstruation;
         return this;
     }
 }

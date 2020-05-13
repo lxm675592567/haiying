@@ -10,7 +10,6 @@ import javax.inject.Singleton;
 @Singleton
 public class UserMapperImpl implements UserMapper {
 
-    @Inject
     private final SqlSessionFactory sqlSessionFactory;
 
     public UserMapperImpl(SqlSessionFactory sqlSessionFactory) {
@@ -44,6 +43,13 @@ public class UserMapperImpl implements UserMapper {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             getUserMapper(sqlSession).saveUserInfo(user);
             sqlSession.commit();
+        }
+    }
+
+    @Override
+    public User findOne(String guid) {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            return getUserMapper(sqlSession).findOne(guid);
         }
     }
 

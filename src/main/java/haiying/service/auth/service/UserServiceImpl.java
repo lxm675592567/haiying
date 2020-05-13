@@ -29,12 +29,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUserInfo(@NotNull User user) {
+    public User updateUserInfo(@NotNull User user) {
         userMapper.updateUserInfo(user);
+        return user;
     }
 
     @Override
     public void saveUserInfo(@NotNull User user) {
         userMapper.saveUserInfo(user);
+    }
+
+    @Override
+    public User findOne(String guid) {
+        return userMapper.findOne(guid);
     }
 }

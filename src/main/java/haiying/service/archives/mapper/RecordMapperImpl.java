@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 import javax.inject.Singleton;
+import java.util.List;
 
 @Singleton
 public class RecordMapperImpl implements RecordMapper {
@@ -62,6 +63,21 @@ public class RecordMapperImpl implements RecordMapper {
             sqlSession.commit();
         }
     }
+
+    @Override
+    public List<Record> getBabyArchives(String openId) {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            return getRecordMapperr(sqlSession).getBabyArchives(openId);
+        }
+    }
+
+    @Override
+    public Record findSingleOne(String openId, String guid) {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            return getRecordMapperr(sqlSession).findSingleOne(openId,guid);
+        }
+    }
+
     private RecordMapper getRecordMapperr(SqlSession sqlSession) {
         return sqlSession.getMapper(RecordMapper.class);
     }

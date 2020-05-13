@@ -18,6 +18,13 @@ public class HeightAndWeightMapperImpl implements HeightAndWeightMapper{
     }
 
     @Override
+    public HeightAndWeight findHeightAndWeightOne(String guid) {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            return getHeightAndWeightMapper(sqlSession).findHeightAndWeightOne(guid);
+        }
+    }
+
+    @Override
     public List<HeightAndWeight> findHeightAndWeightList(String guid) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             return getHeightAndWeightMapper(sqlSession).findHeightAndWeightList(guid);
@@ -60,6 +67,13 @@ public class HeightAndWeightMapperImpl implements HeightAndWeightMapper{
     public List<HeightAndWeight> findHeightAndWeightHistoryPagination(JSONObject jsonObject) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             return getHeightAndWeightMapper(sqlSession).findHeightAndWeightHistoryPagination(jsonObject);
+        }
+    }
+
+    @Override
+    public List<JSONObject> getHeightAndWeightDateCurve(String guid) {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            return getHeightAndWeightMapper(sqlSession).getHeightAndWeightDateCurve(guid);
         }
     }
 

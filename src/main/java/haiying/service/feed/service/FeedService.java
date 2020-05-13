@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface FeedService {
 
-    void saveFeed(Feed feed);
+    Feed saveFeed(Feed feed);
 
     JSONObject findFeed(JSONObject jsonObject);
 

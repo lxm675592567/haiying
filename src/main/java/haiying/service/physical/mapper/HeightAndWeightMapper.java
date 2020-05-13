@@ -11,10 +11,14 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 public interface HeightAndWeightMapper {
+
+    @Select("select * from height_and_weight where guid=#{guid} ORDER BY createtime DESC limit 1")
+    HeightAndWeight findHeightAndWeightOne(String guid);
+
     @Select("select * from height_and_weight where guid=#{guid}")
     List<HeightAndWeight> findHeightAndWeightList(String guid);
 
-    @Select("select * from record where guid=#{guid}")
+    @Select("select * from record where guid=#{guid}  limit 1")
     Record findOne(String guid);
 
     @Select("select * from height_and_weight where guid=#{guid} and monthAgeInt=#{monthAgeInt} order by monthAgeInt desc ")
@@ -26,6 +30,10 @@ public interface HeightAndWeightMapper {
     @Insert("insert into height_and_weight (hwId,guid,height,weight,heightIncrease,weightIncrease,heightEvaluation,weightEvaluation,heightCorrectEvaluation,weightCorrectEvaluation,suggestion,monthAge,monthAgeInt,correctMonthAge,age,doctor,createTime) values(#{hwId},#{guid},#{height},#{weight},#{heightIncrease},#{weightIncrease},#{heightEvaluation},#{weightEvaluation},#{heightCorrectEvaluation},#{weightCorrectEvaluation},#{suggestion},#{monthAge},#{monthAgeInt},#{correctMonthAge},#{age},#{doctor},#{createTime})")
     long save(HeightAndWeight heightAndWeight);
 
-    @Select("select * from height_and_weight where guid=#{guid} limit #{pageNum},#{pageSize} ")
+    @Select("select * from height_and_weight where guid=#{guid} ORDER BY createtime DESC  limit #{pageNum},#{pageSize} ")
     List<HeightAndWeight> findHeightAndWeightHistoryPagination(JSONObject jsonObject);
+
+    @Select("SELECT DATE_FORMAT(createTime,'%Y-%m-%d ') createTime,height,weight  FROM height_and_weight WHERE guid = #{guid}")
+    List<JSONObject> getHeightAndWeightDateCurve(String guid);
+
 }

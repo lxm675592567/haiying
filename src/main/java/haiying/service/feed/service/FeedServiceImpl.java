@@ -28,17 +28,18 @@ public class FeedServiceImpl implements FeedService {
 
 
     @Override
-    public void saveFeed(Feed feed) {
+    public Feed saveFeed(Feed feed) {
         //先根据guid 和 createTime 查询 有没有相同时间的,相同的则替换掉
         String guid = feed.getGuid();
         Date createTime = feed.getCreateTime();
         Feed oneTime = feedMapper.findOneTime(guid, createTime);
         if (!Objects.isNull(oneTime)) {
             feedMapper.updateTime(feed);
-            return;
+            return feed;
         }
         feed.setId(GuidUtil.generateGuid());
         feedMapper.saveFeed(feed);
+        return feed;
     }
 
     @Override
@@ -49,85 +50,54 @@ public class FeedServiceImpl implements FeedService {
         //查询出当天所有数据 List
         List<Feed> feedTodayList = feedMapper.getFeedTodayList(guid, createTime);
         JSONObject object = new JSONObject();
-        JSONObject total = new JSONObject();
-        JSONObject wyjson = new JSONObject();
-        JSONArray nbArray = new JSONArray();
-        JSONArray smArray = new JSONArray();
-        JSONArray mrArray = new JSONArray();
-        JSONArray pzmrArray = new JSONArray();
-        JSONArray pfnArray = new JSONArray();
-        JSONArray fsArray = new JSONArray();
         int mrTotal = 0, mrsecond = 0, pzmrsuckle = 0, pzmrsecond = 0,pfnsuckle = 0, pfnsecond = 0,fssecond = 0,nbsecond = 0,smsecond = 0;
         JSONObject census = new JSONObject();
-        for (Feed feed : feedTodayList) {
-            //先判断type类型
-            JSONObject jsonList = new JSONObject();
 
-            String type = feed.getType();
-            String typeName = feed.getTypeName();
-            String format = DateFormatUtils.format(feed.getCreateTime(), DateUtil.DATE_TIME_FMT);
-            String endTime = "";
-            if (feed.getEndTime() != null) {
-                endTime = DateFormatUtils.format(feed.getEndTime(), DateUtil.DATE_TIME_FMT);
+        //查询类型
+        List<JSONObject> selectTotal = feedMapper.getSelectTotal(guid, createTime);
+        for (JSONObject json : selectTotal) {
+            String type = json.getString("type");
+            String totalCount = json.getString("total");
+            JSONObject milkCount = feedMapper.getMilkCount(guid, createTime, type);
+            if (type.equals("1")){
+                census.put("mrsecond",totalCount); //母乳次数
+                census.put("mrTotal",milkCount.getString("mrTotal"));//母乳分钟
+            }else if(type.equals("2")){
+                census.put("pzmrsecond",totalCount); //瓶装母乳次数
+                census.put("pzmrsuckle",milkCount.getString("suckle"));//瓶装母乳含奶量
+            }else if(type.equals("3")){
+                census.put("pfnsecond",totalCount); //配方奶次数
+                census.put("pfnsuckle",milkCount.getString("suckle"));//配方奶含奶量
+            }else if(type.equals("4")){
+                census.put("fssecond",totalCount); //辅食次数
+            }else if(type.equals("5")){
+                census.put("nbsecond",totalCount); //换尿布次数
+                List<JSONObject> selectCount = feedMapper.getSelectCount(guid, createTime);
+                for (JSONObject hnbjson : selectCount) {
+                    String selectType = hnbjson.getString("selectType");
+                    String count = hnbjson.getString("selectCount");
+                    if (selectType.equals("1")){
+                        census.put("xxsecond",count);
+                    }else if(selectType.equals("2")){
+                        census.put("bbsecond",count);
+                    }else{
+                        census.put("xbsecond",count);
+                    }
+                }
+            }else if(type.equals("6")){
+                census.put("smsecond",totalCount); //睡眠次数
+                List<JSONObject> smDateCurve = feedMapper.getSmDateCurve(guid, createTime);
+                //List<JSONObject>  Curve = new List<JSONObject>;
+                for (JSONObject objects : smDateCurve) {
+                    int spacing = Integer.parseInt(objects.getString("spacing"));
+                    int hours = (int) Math.floor(spacing / 60);
+                    int minute = spacing % 60;
+                    census.put("spacing",hours + "小时" + minute + "分钟");
+                }
             }
-            jsonList.put("typeName", typeName);
-            jsonList.put("createTime", format);
-            if (type.equals("1")) {
-                int duration = Integer.parseInt(feed.getDuration());
-                jsonList.put("lactation", feed.getLactation());
-                jsonList.put("endTime", endTime);
-                jsonList.put("duration", feed.getDuration());
-                mrArray.add(jsonList);
-                mrsecond +=1;         //母乳次数
-                mrTotal = mrTotal + duration;    //母乳分钟
-                census.put("mrsecond",mrsecond);
-                census.put("mrTotal",mrTotal);
-            } else if (type.equals("2")) {
-                int nurseContent = feed.getNurseContent();
-                jsonList.put("nurseContent", feed.getNurseContent());
-                pzmrArray.add(jsonList);
-                pzmrsecond += 1;       //瓶装母乳次数
-                pzmrsuckle = pzmrsuckle + nurseContent; //含奶量
-                census.put("pzmrsuckle",pzmrsuckle);
-                census.put("pzmrsecond",pzmrsecond);
-            } else if (type.equals("3")) {
-                int nurseContent = feed.getNurseContent();
-                jsonList.put("nurseContent", feed.getNurseContent());
-                pfnArray.add(jsonList);
-                pfnsecond += 1;     //配方奶次数
-                pfnsuckle = pfnsuckle + nurseContent;   //含奶量
-                census.put("pfnsuckle",pfnsuckle);
-                census.put("pfnsecond",pfnsecond);
-            } else if (type.equals("4")) {
-                jsonList.put("foodName", feed.getFoodName());
-                jsonList.put("foodDescribe", feed.getFoodDescribe());
-                jsonList.put("foodPhoto", feed.getFoodPhoto());
-                fsArray.add(jsonList); //辅食次数
-                fssecond +=1;
-                census.put("fssecond",fssecond);
-            } else if (type.equals("5")) {
-                jsonList.put("selectTypeName", feed.getSelectTypeName());
-                jsonList.put("urineShape", feed.getUrineShape());
-                jsonList.put("shitShape", feed.getShitShape());
-                nbArray.add(jsonList);
-                nbsecond +=1;    //换尿布次数
-                census.put("nbsecond",nbsecond);
-            } else if (type.equals("6")) {
-                jsonList.put("endTime", endTime);
-                smArray.add(jsonList);
-                smsecond+=1;  //睡眠次数
-                census.put("smsecond",smsecond);
-            }
+
         }
-        total.put("nbjson", nbArray);
-        total.put("smjson", smArray);
-        wyjson.put("mrjson", mrArray);
-        wyjson.put("pzmrjson", pzmrArray);
-        wyjson.put("pfnjson", pfnArray);
-        wyjson.put("fsjson", fsArray);
-        total.put("wyjson", wyjson);
 
-        //object.put("total",total);
         object.put("total",feedTodayList);
         object.put("census",census);
         return object;

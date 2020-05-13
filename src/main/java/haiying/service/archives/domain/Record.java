@@ -14,7 +14,7 @@ public class Record {
     public Record() {
     }
 
-    public Record(String guid, String cardId, String name, String sex, String idnumber, Date birthday, String unionId, Date createTime, DateUtil.Age ageDetail, String status, String openId, String onlyChild, String pregnantWeek, String avatar) {
+    public Record(String guid, String cardId, String name, String sex, String idnumber, Date birthday, String unionId, Date createTime, DateUtil.Age ageDetail, String status, String openId, String onlyChild, String pregnantWeek, String avatar, String birthHeight, String birthWeight, String pregnancySecond, String yieldSecond) {
         this.guid = guid;
         this.cardId = cardId;
         this.name = name;
@@ -29,6 +29,10 @@ public class Record {
         this.onlyChild = onlyChild;
         this.pregnantWeek = pregnantWeek;
         this.avatar = avatar;
+        this.birthHeight = birthHeight;
+        this.birthWeight = birthWeight;
+        this.pregnancySecond = pregnancySecond;
+        this.yieldSecond = yieldSecond;
     }
 
     /**
@@ -102,6 +106,26 @@ public class Record {
      * 头像url
      */
     private String avatar;
+
+    /**
+     * 出生身长
+     */
+    private String birthHeight;
+
+    /**
+     * 出生体重
+     */
+    private String birthWeight;
+
+    /**
+     * 第几孕
+     */
+    private String pregnancySecond;
+
+    /**
+     * 第几产
+     */
+    private String yieldSecond;
     /**
      * 月龄
      */
@@ -256,6 +280,42 @@ public class Record {
 
     public Record setAvatar(String avatar) {
         this.avatar = avatar;
+        return this;
+    }
+
+    public String getBirthHeight() {
+        return birthHeight;
+    }
+
+    public Record setBirthHeight(String birthHeight) {
+        this.birthHeight = birthHeight;
+        return this;
+    }
+
+    public String getBirthWeight() {
+        return birthWeight;
+    }
+
+    public Record setBirthWeight(String birthWeight) {
+        this.birthWeight = birthWeight;
+        return this;
+    }
+
+    public String getPregnancySecond() {
+        return pregnancySecond;
+    }
+
+    public Record setPregnancySecond(String pregnancySecond) {
+        this.pregnancySecond = pregnancySecond;
+        return this;
+    }
+
+    public String getYieldSecond() {
+        return yieldSecond;
+    }
+
+    public Record setYieldSecond(String yieldSecond) {
+        this.yieldSecond = yieldSecond;
         return this;
     }
 }

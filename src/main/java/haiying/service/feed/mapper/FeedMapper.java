@@ -40,10 +40,22 @@ public interface FeedMapper {
     @Select("SELECT  DATE_FORMAT(createTime,'%Y-%m-%d ') createTime, COUNT(*) COUNT  FROM feed WHERE guid = #{guid} AND  TYPE = 5 AND createTime LIKE CONCAT('%',#{createTime},'%') AND selectType IN (#{selectType},3) GROUP BY DATE_FORMAT(createTime,'%Y-%m-%d ')")
     List<JSONObject> getNbDateCurve(String guid, String createTime,String selectType);
 
-    @Select("SELECT t.createTime createTime, SUM(t.spacing)  spacing FROM (SELECT  DATE_FORMAT(createTime,'%Y-%m-%d') createTime ,TIMESTAMPDIFF(MINUTE,createTime,endTime) spacing FROM feed WHERE guid = #{guid} AND  TYPE = 1 AND createTime LIKE CONCAT('%',#{createTime},'%')) t GROUP BY createTime ")
+    @Select("SELECT t.createTime createTime, SUM(t.spacing)  spacing FROM (SELECT  DATE_FORMAT(createTime,'%Y-%m-%d') createTime ,TIMESTAMPDIFF(MINUTE,createTime,endTime) spacing FROM feed WHERE guid = #{guid} AND  TYPE = 5 AND createTime LIKE CONCAT('%',#{createTime},'%')) t GROUP BY createTime ")
     List<JSONObject> getSmDateCurve(String guid, String createTime);
 
-    @Select("select * from feed where guid=#{guid} limit #{pageNum},#{pageSize} and createTime CONCAT('%',#{createTime},'%') ")
+    @Select("select * from feed where guid=#{guid} AND createTime LIKE CONCAT('%',#{createTime},'%')  ORDER BY createtime DESC limit #{pageNum},#{pageSize} ")
     List<Feed> findFeedPagination(JSONObject jsonObject);
+
+    @Select("SELECT type type,COUNT(type) total FROM feed WHERE  guid = #{guid}  AND createTime LIKE CONCAT('%',#{createTime},'%')  GROUP BY type")
+    List<JSONObject> getSelectTotal(String guid, String createTime);
+
+    @Select("SELECT selectType , COUNT(selectType) selectCount FROM feed WHERE TYPE = 5 AND guid = #{guid}  AND createTime LIKE CONCAT('%',#{createTime},'%')  GROUP BY selectType")
+    List<JSONObject> getSelectCount(String guid, String createTime);
+
+    @Select("SELECT SUM(duration) mrTotal,SUM(nurseContent) suckle FROM feed WHERE type = #{type} AND guid = #{guid}  AND createTime LIKE CONCAT('%',#{createTime},'%')")
+    JSONObject getMilkCount(String guid, String createTime,String type);
+
+    @Select("SELECT t.createTime createTime FROM (SELECT  DATE_FORMAT(createTime,'%Y年%m月%d日') createTime,guid FROM feed where guid = #{guid} ORDER BY createTime DESC )t GROUP BY createTime ORDER BY createTime DESC")
+    List<JSONObject> getFeedTime(String guid);
 }
 

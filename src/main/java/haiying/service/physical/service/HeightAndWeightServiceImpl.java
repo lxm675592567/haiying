@@ -8,6 +8,7 @@ import haiying.service.physical.domain.HeightAndWeight;
 import haiying.service.physical.mapper.HeightAndWeightMapper;
 
 import haiying.service.physical.utils.HeightAndWeightUtils;
+import haiying.util.DateUtil;
 import haiying.util.GuidUtil;
 import haiying.util.StringUtil;
 import io.micronaut.validation.Validated;
@@ -77,7 +78,7 @@ public class HeightAndWeightServiceImpl implements HeightAndWeightService{
         return this.heightAndWeightMapper.findHeightAndWeightList(guid);
     }
 
-    @Override
+
     public HeightAndWeight getHeightAdnWeightTestResult(HeightAndWeight heightAndWeight) {
         checkHeightAndWeight(heightAndWeight);
 
@@ -110,20 +111,23 @@ public class HeightAndWeightServiceImpl implements HeightAndWeightService{
         if (weightStand != null) {
             heightAndWeight.setWeightEvaluation(weightStand.getJudgeStand(weight));
         }
+        String ageDetail = record.getAgeDetail().getAgeDetail();
+        heightAndWeight.setCreateTime(new Date()).setAge(ageDetail);
         return heightAndWeight;
     }
 
     @Override
-    public void saveOrEditHeightAndWeight(HeightAndWeight heightAndWeight) {
+    public HeightAndWeight saveOrEditHeightAndWeight(HeightAndWeight heightAndWeight) {
         //先判断guid和monthAgeInt是否有相同 有相同则删除相同
-        HeightAndWeight lastHeightAndWeight = this.heightAndWeightMapper.findLastHeightAndWeight(heightAndWeight.getGuid(), heightAndWeight.getMonthAgeInt());
+        HeightAndWeight heightAdnWeightTestResult = getHeightAdnWeightTestResult(heightAndWeight);
+        HeightAndWeight lastHeightAndWeight = this.heightAndWeightMapper.findLastHeightAndWeight(heightAdnWeightTestResult.getGuid(), heightAdnWeightTestResult.getMonthAgeInt());
         if(!Objects.isNull(lastHeightAndWeight)){
-            heightAndWeightMapper.remove(heightAndWeight.getGuid(),heightAndWeight.getMonthAgeInt());
+            heightAndWeightMapper.remove(heightAdnWeightTestResult.getGuid(),heightAdnWeightTestResult.getMonthAgeInt());
         }
         heightAndWeight.setHwId(GuidUtil.generateGuid()).setCreateTime(new Date());
 
-        long save = heightAndWeightMapper.save(heightAndWeight);
-        System.out.println(save);
+        heightAndWeightMapper.save(heightAdnWeightTestResult);
+        return heightAdnWeightTestResult;
     }
 
     @Override
@@ -133,6 +137,11 @@ public class HeightAndWeightServiceImpl implements HeightAndWeightService{
         jsonObject.remove("pageNum");
         jsonObject.put("pageNum",pageNum);
         return heightAndWeightMapper.findHeightAndWeightHistoryPagination(jsonObject);
+    }
+
+    @Override
+    public List<JSONObject> getHeightAndWeightDateCurve(String guid) {
+        return heightAndWeightMapper.getHeightAndWeightDateCurve(guid);
     }
 
     /**

@@ -10,7 +10,7 @@ public class Feed {
     public Feed() {
     }
 
-    public Feed(String id, String guid, String typeName, String type, String lactation, Date createTime, Date endTime, String duration, int nurseContent, String foodName, String foodDescribe, String foodPhoto, String selectType, String selectTypeName, String urineShape, String shitShape) {
+    public Feed(String id, String guid, String typeName, String type, String lactation, Date createTime, Date endTime, int duration, int nurseContent, String foodName, String foodDescribe, String foodPhoto, String selectType, String selectTypeName, String urineShape, String shitShape) {
         this.id = id;
         this.guid = guid;
         this.typeName = typeName;
@@ -45,7 +45,7 @@ public class Feed {
     @JsonFormat(pattern = DateUtil.DATE_TIME_FMT, timezone = DateUtil.TIME_ZONE)
     private Date endTime;    //结束时间
 
-    private String duration; //哺乳时长
+    private int duration; //哺乳时长
 
     private int nurseContent;  //喂奶量
 
@@ -126,11 +126,11 @@ public class Feed {
         return this;
     }
 
-    public String getDuration() {
+    public int getDuration() {
         return duration;
     }
 
-    public Feed setDuration(String duration) {
+    public Feed setDuration(int duration) {
         this.duration = duration;
         return this;
     }

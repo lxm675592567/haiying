@@ -92,4 +92,32 @@ public class FeedMapperImpl implements FeedMapper {
             return getFeedMapperr(sqlSession).findFeedPagination(jsonObject);
         }
     }
+
+    @Override
+    public List<JSONObject>  getSelectTotal(String guid, String createTime) {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            return getFeedMapperr(sqlSession).getSelectTotal(guid,createTime);
+        }
+    }
+
+    @Override
+    public List<JSONObject> getSelectCount(String guid, String createTime) {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            return getFeedMapperr(sqlSession).getSelectCount(guid,createTime);
+        }
+    }
+
+    @Override
+    public JSONObject getMilkCount(String guid, String createTime, String type) {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            return getFeedMapperr(sqlSession).getMilkCount(guid,createTime,type);
+        }
+    }
+
+    @Override
+    public List<JSONObject> getFeedTime(String guid) {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            return getFeedMapperr(sqlSession).getFeedTime(guid);
+        }
+    }
 }
