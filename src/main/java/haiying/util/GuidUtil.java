@@ -19,4 +19,9 @@ public class GuidUtil {
         return sequence.nextId();
     }
 
+    public static String getRandom(int len) {
+         int rs = (int) ((Math.random() * 9 + 1) * Math.pow(10, len - 1));
+         return String.valueOf(rs);
+    }
+
 }

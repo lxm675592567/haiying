@@ -40,9 +40,13 @@ public class HeightAndWeightController {
      * @api {Post} /physical/heightAndWeight/saveOrEditHeightAndWeight saveOrEditHeightAndWeight
      * @apiGroup 体格发育
      * @apiDescription 保存-根据传递的身高体重数据保存体格发育数据
-     * @apiParam {Json} HeightAndWeight 身高体重实体类
+     * @apiParam {Json} guid(必填) guid
+     * @apiParam {json}height(必填) 身高
+     * @apiParam {json}weight(必填) 体重
      * @apiParamExample {Json} 传参示例
-     * {"guid":"TQDV26PDGS15VAV58JA68OU5VX86GG81","height":100,"weight":43}
+     * {"guid":"EFIWFQE15PIH69NBYDFV3LPDTXTL5ES8","height":100,"weight":43}
+     * @apiSuccessExample  {json} 返回值示例
+     * {"status":0,"msg":"ok","result":{"hwId":"1260856430453874688","guid":"EFIWFQE15PIH69NBYDFV3LPDTXTL5ES8","height":100.0,"weight":43.0,"heightEvaluation":"上异常","weightEvaluation":"上异常","monthAgeInt":12,"age":"1岁0月27天","createTime":"2020-05-14 16:56:13","monthIntHeightEntry":[12,100.0],"monthIntWeightEntry":[12,43.0],"correctMonthHeightEntry":[null,100.0],"monthHeightEntry":[null,100.0],"monthWeightEntry":[null,43.0],"correctMonthWeightEntry":[null,43.0]},"success":true}
      */
     @Post("/saveOrEditHeightAndWeight")
     public Result<HeightAndWeight> saveOrEditHeightAndWeight(@Body @Valid HeightAndWeight heightAndWeight) {

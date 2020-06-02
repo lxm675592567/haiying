@@ -1,5 +1,6 @@
 package haiying.service.auth.service;
 
+import com.alibaba.fastjson.JSONObject;
 import haiying.service.auth.domain.User;
 
 import javax.validation.constraints.NotNull;
@@ -15,5 +16,11 @@ public interface UserService {
 
     void saveUserInfo(@NotNull User user);
 
-    User findOne(String guid);
+    JSONObject findOne(String openId);
+
+    JSONObject selectGet();
+
+    JSONObject findAreaList();
+
+    void updateUser(JSONObject json);
 }

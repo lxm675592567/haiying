@@ -10,7 +10,7 @@ public class Feed {
     public Feed() {
     }
 
-    public Feed(String id, String guid, String typeName, String type, String lactation, Date createTime, Date endTime, int duration, int nurseContent, String foodName, String foodDescribe, String foodPhoto, String selectType, String selectTypeName, String urineShape, String shitShape) {
+    public Feed(String id, String guid, String typeName, String type, String lactation, Date createTime, Date endTime, int duration, int nurseContent, String foodName, String foodDescribe, String foodPhoto, String selectType, String selectTypeName, String urineShape, String shitShape, String diaperTime) {
         this.id = id;
         this.guid = guid;
         this.typeName = typeName;
@@ -27,6 +27,7 @@ public class Feed {
         this.selectTypeName = selectTypeName;
         this.urineShape = urineShape;
         this.shitShape = shitShape;
+        this.diaperTime = diaperTime;
     }
 
     private String id;    //主键id
@@ -39,10 +40,10 @@ public class Feed {
 
     private String lactation;    //哺乳行为
 
-    @JsonFormat(pattern = DateUtil.DATE_TIME_FMT, timezone = DateUtil.TIME_ZONE)
+    @JsonFormat(pattern = DateUtil.DATA_TIME_FMT, timezone = DateUtil.TIME_ZONE)
     private Date createTime;  //开始时间
 
-    @JsonFormat(pattern = DateUtil.DATE_TIME_FMT, timezone = DateUtil.TIME_ZONE)
+    @JsonFormat(pattern = DateUtil.DATA_TIME_FMT, timezone = DateUtil.TIME_ZONE)
     private Date endTime;    //结束时间
 
     private int duration; //哺乳时长
@@ -62,6 +63,8 @@ public class Feed {
     private String urineShape;  //嘘嘘形状
 
     private String shitShape;  //便便形状
+
+    private String diaperTime; //换尿布时间
 
     public String getId() {
         return id;
@@ -207,5 +210,12 @@ public class Feed {
         return this;
     }
 
+    public String getDiaperTime() {
+        return diaperTime;
+    }
 
+    public Feed setDiaperTime(String diaperTime) {
+        this.diaperTime = diaperTime;
+        return this;
+    }
 }

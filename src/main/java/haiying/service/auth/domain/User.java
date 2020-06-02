@@ -11,7 +11,7 @@ public class User {
     public User() {
     }
 
-    public User(String userId, String openId, String unionId, String nickName, int gender, String country, String province, String city, String avatarUrl, Date createTime, int loginType, Date birthday, String phone, String height, String menstruation) {
+    public User(String userId, String openId, String unionId, String nickName, int gender, String country, String province, String city, String avatarUrl, String avatar, Date createTime, int loginType, Date birthday, String phone, String height, String menstruation, String tenantId, String tenantName, String occupation) {
         this.userId = userId;
         this.openId = openId;
         this.unionId = unionId;
@@ -21,12 +21,16 @@ public class User {
         this.province = province;
         this.city = city;
         this.avatarUrl = avatarUrl;
+        this.avatar = avatar;
         this.createTime = createTime;
         this.loginType = loginType;
         this.birthday = birthday;
         this.phone = phone;
         this.height = height;
         this.menstruation = menstruation;
+        this.tenantId = tenantId;
+        this.tenantName = tenantName;
+        this.occupation = occupation;
     }
 
     private String userId;    //主键id
@@ -47,7 +51,9 @@ public class User {
 
     private String avatarUrl;  //用户图片头像url
 
-    @JsonFormat(pattern = DateUtil.DATE_TIME_FMT, timezone = DateUtil.TIME_ZONE)
+    private String avatar;
+
+    @JsonFormat(pattern = DateUtil.DATE_FMT, timezone = DateUtil.TIME_ZONE)
     private Date createTime;    //创建时间
 
     private int loginType;
@@ -61,6 +67,11 @@ public class User {
 
     private String menstruation;  //末次月经
 
+    private String tenantId;    //租户id
+
+    private String tenantName;  //租户名称
+
+    private String occupation;  //职业
 
     public String getUserId() {
         return userId;
@@ -194,6 +205,42 @@ public class User {
 
     public User setMenstruation(String menstruation) {
         this.menstruation = menstruation;
+        return this;
+    }
+
+    public String getTenantId() {
+        return tenantId;
+    }
+
+    public User setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+        return this;
+    }
+
+    public String getTenantName() {
+        return tenantName;
+    }
+
+    public User setTenantName(String tenantName) {
+        this.tenantName = tenantName;
+        return this;
+    }
+
+    public String getOccupation() {
+        return occupation;
+    }
+
+    public User setOccupation(String occupation) {
+        this.occupation = occupation;
+        return this;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public User setAvatar(String avatar) {
+        this.avatar = avatar;
         return this;
     }
 }

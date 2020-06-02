@@ -45,7 +45,7 @@ public class FeedMapperImpl implements FeedMapper {
     }
 
     @Override
-    public List<Feed> getFeedTodayList(String guid, String createTime) {
+    public List<JSONObject> getFeedTodayList(String guid, String createTime) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             return getFeedMapperr(sqlSession).getFeedTodayList(guid,createTime);
         }
@@ -59,35 +59,42 @@ public class FeedMapperImpl implements FeedMapper {
     }
 
     @Override
-    public List<JSONObject>  getWnDateCurve(String guid, String createTime) {
+    public List<JSONObject>  getWnDateCurve(String guid) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-            return getFeedMapperr(sqlSession).getWnDateCurve(guid,createTime);
+            return getFeedMapperr(sqlSession).getWnDateCurve(guid);
         }
     }
 
     @Override
-    public List<JSONObject> getFsDateCurve(String guid, String createTime) {
+    public List<JSONObject> getFsDateCurve(String guid) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-            return getFeedMapperr(sqlSession).getFsDateCurve(guid,createTime);
+            return getFeedMapperr(sqlSession).getFsDateCurve(guid);
         }
     }
 
     @Override
-    public List<JSONObject> getNbDateCurve(String guid, String createTime, String selectType) {
+    public List<JSONObject> getNbDateCurve(String guid) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-            return getFeedMapperr(sqlSession).getNbDateCurve(guid,createTime,selectType);
+            return getFeedMapperr(sqlSession).getNbDateCurve(guid);
         }
     }
 
     @Override
-    public List<JSONObject> getSmDateCurve(String guid,String createTime) {
+    public JSONObject getSmDateCurve(String guid, String createTime) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             return getFeedMapperr(sqlSession).getSmDateCurve(guid,createTime);
         }
     }
 
     @Override
-    public List<Feed> findFeedPagination(JSONObject jsonObject) {
+    public List<JSONObject> getSmDateCurveNew(String guid) {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            return getFeedMapperr(sqlSession).getSmDateCurveNew(guid);
+        }
+    }
+
+    @Override
+    public List<JSONObject> findFeedPagination(JSONObject jsonObject) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             return getFeedMapperr(sqlSession).findFeedPagination(jsonObject);
         }
@@ -118,6 +125,35 @@ public class FeedMapperImpl implements FeedMapper {
     public List<JSONObject> getFeedTime(String guid) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             return getFeedMapperr(sqlSession).getFeedTime(guid);
+        }
+    }
+
+    @Override
+    public List<JSONObject> getFeedTimeNew(String guid, Long pageNum, Long pageSize) {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            return getFeedMapperr(sqlSession).getFeedTimeNew(guid,pageNum,pageSize);
+        }
+    }
+
+    @Override
+    public List<JSONObject> findFeedPaginationNew(JSONObject jsonObject) {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            return getFeedMapperr(sqlSession).findFeedPaginationNew(jsonObject);
+        }
+    }
+
+
+    @Override
+    public List<JSONObject> getArchivesRecord(String guid) {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            return getFeedMapperr(sqlSession).getArchivesRecord(guid);
+        }
+    }
+
+    @Override
+    public JSONObject getDailyRecord(String guid, String type) {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            return getFeedMapperr(sqlSession).getDailyRecord(guid,type);
         }
     }
 }

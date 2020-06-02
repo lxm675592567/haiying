@@ -1,5 +1,6 @@
 package haiying.service.auth.mapper;
 
+import com.alibaba.fastjson.JSONObject;
 import haiying.service.auth.domain.User;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -47,9 +48,9 @@ public class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public User findOne(String guid) {
+    public JSONObject findOne(String openId) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-            return getUserMapper(sqlSession).findOne(guid);
+            return getUserMapper(sqlSession).findOne(openId);
         }
     }
 

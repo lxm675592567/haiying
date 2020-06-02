@@ -14,7 +14,7 @@ public class Record {
     public Record() {
     }
 
-    public Record(String guid, String cardId, String name, String sex, String idnumber, Date birthday, String unionId, Date createTime, DateUtil.Age ageDetail, String status, String openId, String onlyChild, String pregnantWeek, String avatar, String birthHeight, String birthWeight, String pregnancySecond, String yieldSecond) {
+    public Record(String guid, String cardId, String name, String sex, String idnumber, Date birthday, String unionId, Date createTime, DateUtil.Age ageDetail, String status, String openId, String onlyChild, String pregnantWeek, String avatar, String birthHeight, String birthWeight, String pregnancySecond, String yieldSecond, String address, String ptGuid) {
         this.guid = guid;
         this.cardId = cardId;
         this.name = name;
@@ -33,6 +33,8 @@ public class Record {
         this.birthWeight = birthWeight;
         this.pregnancySecond = pregnancySecond;
         this.yieldSecond = yieldSecond;
+        this.address = address;
+        this.ptGuid = ptGuid;
     }
 
     /**
@@ -51,7 +53,7 @@ public class Record {
     private String name;
 
     /**
-     * 性别
+     * 性别(1男2女)
      */
     private String sex;
 
@@ -126,6 +128,16 @@ public class Record {
      * 第几产
      */
     private String yieldSecond;
+
+    /**
+     * 地址
+     */
+    private String address;
+
+    /**
+     * 平台guid
+     */
+    private String ptGuid;
     /**
      * 月龄
      */
@@ -316,6 +328,24 @@ public class Record {
 
     public Record setYieldSecond(String yieldSecond) {
         this.yieldSecond = yieldSecond;
+        return this;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public Record setAddress(String address) {
+        this.address = address;
+        return this;
+    }
+
+    public String getPtGuid() {
+        return ptGuid;
+    }
+
+    public Record setPtGuid(String ptGuid) {
+        this.ptGuid = ptGuid;
         return this;
     }
 }

@@ -9,16 +9,19 @@ import java.util.List;
 
 public interface RecordMapper {
 
-    @Select("select * from record where guid=#{guid} LIMIT 1")
+    @Select("select guid guid,cardId cardId,name name,sex sex,idnumber idnumber,DATE_FORMAT(birthday,'%Y-%m-%d') birthday,unionId unionId,DATE_FORMAT(createTime,'%Y-%m-%d') createTime,status status,openId openId,onlyChild onlyChild,pregnantWeek pregnantWeek,IFNULL(avatar,'')  avatar,birthHeight birthHeight,birthWeight birthWeight,pregnancySecond pregnancySecond,yieldSecond yieldSecond,address address from record where guid=#{guid} LIMIT 1")
     Record findOne(String guid);
 
-    @Insert("insert into record (guid,cardId,name,sex,idnumber,birthday,unionId,createTime,status,openId,onlyChild,pregnantWeek,avatar,birthHeight,birthWeight,pregnancySecond,yieldSecond) values(#{guid},#{cardId},#{name},#{sex},#{idnumber},#{birthday},#{unionId},#{createTime},#{status},#{openId},#{onlyChild},#{pregnantWeek},#{avatar},#{birthHeight},#{birthWeight},#{pregnancySecond},#{yieldSecond})")
+    @Select("select guid guid,cardId cardId,name name,sex sex,idnumber idnumber,DATE_FORMAT(birthday,'%Y-%m-%d') birthday,unionId unionId,DATE_FORMAT(createTime,'%Y-%m-%d') createTime,status status,openId openId,onlyChild onlyChild,pregnantWeek pregnantWeek,IFNULL(avatar,'')  avatar,birthHeight birthHeight,birthWeight birthWeight,pregnancySecond pregnancySecond,yieldSecond yieldSecond,address address  from record where guid=#{guid} LIMIT 1")
+    JSONObject findOneNew(String guid);
+
+    @Insert("insert into record (guid,cardId,name,sex,idnumber,birthday,unionId,createTime,status,openId,onlyChild,pregnantWeek,avatar,birthHeight,birthWeight,pregnancySecond,yieldSecond,address) values(#{guid},#{cardId},#{name},#{sex},#{idnumber},#{birthday},#{unionId},#{createTime},#{status},#{openId},#{onlyChild},#{pregnantWeek},#{avatar},#{birthHeight},#{birthWeight},#{pregnancySecond},#{yieldSecond},#{address})")
     void saveRecord(Record record);
 
-    @Update("update record set name=#{name},sex=#{sex},idnumber=#{idnumber},birthday=#{birthday},status=#{status},onlyChild=#{onlyChild},pregnantWeek=#{pregnantWeek},avatar=#{avatar} where guid=#{guid}")
+    @Update("update record set name=#{name},sex=#{sex},idnumber=#{idnumber},birthday=#{birthday},status=#{status},onlyChild=#{onlyChild},pregnantWeek=#{pregnantWeek},avatar=#{avatar},birthHeight=#{birthHeight},birthWeight=#{birthWeight},pregnancySecond=#{pregnancySecond},yieldSecond=#{yieldSecond},address=#{address} where guid=#{guid}")
     void updateRecord(Record record);
 
-    @Select("select * from cardNum where date=#{date}")
+    @Select("select id id,date date,cardNum cardNum  from cardNum where date=#{date}")
     JSONObject findOneCardNum(String date);
 
     @Update("update cardNum set cardnum=#{cardnum} where date=#{date}")
@@ -28,21 +31,20 @@ public interface RecordMapper {
     @Options(useGeneratedKeys=true, keyProperty="id", keyColumn="id")
     void insertOneCardNum(CardNum cardNum);
 
-    @Select("select * from record where openId=#{openId} LIMIT 1")
+    @Select("select * from record where openId=#{openId}")
     List<Record> getBabyArchives(String openId);
 
-    //@Select("select * from record where openId=#{openId} and guid=#{guid} LIMIT 1")
     @Select({"<script>",
-            "SELECT * FROM record",
+            "SELECT guid,cardId,name,sex,idnumber,DATE_FORMAT(birthday,'%Y-%m-%d ') birthday,unionId,DATE_FORMAT(createTime,'%Y-%m-%d ') createTime,status,openId,onlyChild,pregnantWeek,avatar,birthHeight,birthWeight,pregnancySecond,yieldSecond FROM record",
             "WHERE 1=1",
-            "<when test='guid!=null'>",
+            "<when test='guid!=null and guid.trim() != &quot;&quot;'>",
             "AND guid = #{guid}",
             "</when>",
-            "<when test='openId!=null'>",
+            "<when test='openId!=null and openId.trim() != &quot;&quot;'>",
             "AND openId = #{openId}",
             "</when>",
             "LIMIT 1",
             "</script>"})
-    Record findSingleOne(String openId,String guid);
+    JSONObject findSingleOne(String openId,String guid);
 }
 

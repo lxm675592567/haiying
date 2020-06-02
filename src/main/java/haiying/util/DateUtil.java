@@ -31,6 +31,11 @@ public class DateUtil {
     public static final String DATE_TIME_FMT = "yyyy-MM-dd HH:mm:ss";
 
     /**
+     * 时间格式
+     */
+    public static final String DATA_TIME_FMT = "yyyy-MM-dd HH:mm";
+
+    /**
      * 时区
      */
     public static final String TIME_ZONE = "GMT+8";
@@ -127,6 +132,19 @@ public class DateUtil {
         }
         return jsonObject;
     }
+
+    /**
+     * 将短时间格式时间转换为字符串 yyyy-MM-dd
+     *
+     * @param dateDate
+     * @param k
+     * @return
+     */
+     public static String dateToStr(java.util.Date dateDate) {
+         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+         String dateString = formatter.format(dateDate);
+         return dateString;
+     }
 
     /**
      * 年龄详情类

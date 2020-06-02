@@ -26,6 +26,13 @@ public class RecordMapperImpl implements RecordMapper {
     }
 
     @Override
+    public JSONObject findOneNew(String guid) {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            return getRecordMapperr(sqlSession).findOneNew(guid);
+        }
+    }
+
+    @Override
     public void saveRecord(Record record) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             getRecordMapperr(sqlSession).saveRecord(record);
@@ -72,7 +79,7 @@ public class RecordMapperImpl implements RecordMapper {
     }
 
     @Override
-    public Record findSingleOne(String openId, String guid) {
+    public JSONObject findSingleOne(String openId, String guid) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             return getRecordMapperr(sqlSession).findSingleOne(openId,guid);
         }
