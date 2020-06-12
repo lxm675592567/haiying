@@ -14,7 +14,7 @@ public class Record {
     public Record() {
     }
 
-    public Record(String guid, String cardId, String name, String sex, String idnumber, Date birthday, String unionId, Date createTime, DateUtil.Age ageDetail, String status, String openId, String onlyChild, String pregnantWeek, String avatar, String birthHeight, String birthWeight, String pregnancySecond, String yieldSecond, String address, String ptGuid) {
+    public Record(String guid, String cardId, String name, String sex, String idnumber, Date birthday, String unionId, Date createTime, DateUtil.Age ageDetail, String status, String openId, String onlyChild, String pregnantWeek, String avatar, String birthHeight, String birthWeight, String pregnancySecond, String yieldSecond, String address, String ptGuid, String tenantId) {
         this.guid = guid;
         this.cardId = cardId;
         this.name = name;
@@ -35,6 +35,7 @@ public class Record {
         this.yieldSecond = yieldSecond;
         this.address = address;
         this.ptGuid = ptGuid;
+        this.tenantId = tenantId;
     }
 
     /**
@@ -138,6 +139,9 @@ public class Record {
      * 平台guid
      */
     private String ptGuid;
+
+    private String tenantId;    //租户id
+
     /**
      * 月龄
      */
@@ -346,6 +350,15 @@ public class Record {
 
     public Record setPtGuid(String ptGuid) {
         this.ptGuid = ptGuid;
+        return this;
+    }
+
+    public String getTenantId() {
+        return tenantId;
+    }
+
+    public Record setTenantId(String tenantId) {
+        this.tenantId = tenantId;
         return this;
     }
 }

@@ -920,6 +920,279 @@
     "name": "PutUserUpdateuserinfo"
   },
   {
+    "type": "Post",
+    "url": "/breastMilk/findBreastMilk",
+    "title": "findBreastMilk",
+    "group": "母乳测量",
+    "description": "<p>获取母乳测量记录信息</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "json",
+            "optional": false,
+            "field": "guid",
+            "description": "<p>档案号</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "json",
+            "optional": false,
+            "field": "pageSize",
+            "description": "<p>每页固定数</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "json",
+            "optional": false,
+            "field": "pageNum",
+            "description": "<p>开始</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "传参示例",
+          "content": "{\"guid\":\"EFIWFQE15PIH69NBYDFV3LPDTXTL5ES8\",\"pageSize\": 5,\"pageNum\": 1}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "json",
+            "optional": false,
+            "field": "openId",
+            "description": "<p>openId</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "json",
+            "optional": false,
+            "field": "breastType",
+            "description": "<p>母乳类型</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "json",
+            "optional": false,
+            "field": "fat",
+            "description": "<p>脂肪</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "json",
+            "optional": false,
+            "field": "lactose",
+            "description": "<p>乳糖</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "json",
+            "optional": false,
+            "field": "protein",
+            "description": "<p>蛋白质</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "json",
+            "optional": false,
+            "field": "energy",
+            "description": "<p>能量</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "json",
+            "optional": false,
+            "field": "water",
+            "description": "<p>水分</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "json",
+            "optional": false,
+            "field": "mineral",
+            "description": "<p>矿物质</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "json",
+            "optional": false,
+            "field": "density",
+            "description": "<p>密度</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "json",
+            "optional": false,
+            "field": "createTime",
+            "description": "<p>时间</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "json",
+            "optional": false,
+            "field": "result",
+            "description": "<p>结果</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "json",
+            "optional": false,
+            "field": "proposal",
+            "description": "<p>指导建议</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "json",
+            "optional": false,
+            "field": "age",
+            "description": "<p>年龄</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "返回值示例",
+          "content": "[{\"proposal\":\"非常好\",\"density\":\"1.041\",\"openId\":\"ojP-tvwqOu-kwE4qxKqhFJSC3KOw\",\"lactose\":\"7.86\",\"water\":\"91.52\",\"result\":\"正常\",\"createTime\":\"2020-04-24 13:20:09\",\"breastType\":\"过渡乳\",\"protein\":\"1.52\",\"fat\":\"3.80\",\"mineral\":\"0.29\",\"age\":\"3个月零4周\",\"energy\":\"63.66\"},{\"proposal\":\"非常好\",\"density\":\"1.041\",\"openId\":\"ojP-tvwqOu-kwE4qxKqhFJSC3KOw\",\"lactose\":\"7.86\",\"water\":\"91.52\",\"result\":\"正常\",\"createTime\":\"2020-04-24 13:20:09\",\"breastType\":\"过渡乳\",\"protein\":\"1.52\",\"fat\":\"3.80\",\"mineral\":\"0.29\",\"age\":\"3个月零4周\",\"energy\":\"63.66\"}]",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/main/java/haiying/service/breastmilk/controller/BreastMilkController.java",
+    "groupTitle": "母乳测量",
+    "name": "PostBreastmilkFindbreastmilk"
+  },
+  {
+    "type": "Post",
+    "url": "/breastMilk/saveBreastMilk",
+    "title": "saveBreastMilk",
+    "group": "母乳测量",
+    "description": "<p>保存母乳测量信息</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "json",
+            "optional": false,
+            "field": "openId",
+            "description": "<p>openId</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "json",
+            "optional": false,
+            "field": "breastType",
+            "description": "<p>母乳类型</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "json",
+            "optional": false,
+            "field": "fat",
+            "description": "<p>脂肪</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "json",
+            "optional": false,
+            "field": "lactose",
+            "description": "<p>乳糖</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "json",
+            "optional": false,
+            "field": "protein",
+            "description": "<p>蛋白质</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "json",
+            "optional": false,
+            "field": "energy",
+            "description": "<p>能量</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "json",
+            "optional": false,
+            "field": "water",
+            "description": "<p>水分</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "json",
+            "optional": false,
+            "field": "mineral",
+            "description": "<p>矿物质</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "json",
+            "optional": false,
+            "field": "density",
+            "description": "<p>密度</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "json",
+            "optional": false,
+            "field": "createTime",
+            "description": "<p>时间</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "json",
+            "optional": false,
+            "field": "result",
+            "description": "<p>结果</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "json",
+            "optional": false,
+            "field": "proposal",
+            "description": "<p>指导建议</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "json",
+            "optional": false,
+            "field": "age",
+            "description": "<p>年龄</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "传参示例",
+          "content": "{\n\t\"openId\": \"ojP-tvwqOu-kwE4qxKqhFJSC3KOw\",\n\t\"breastType\": \"过渡乳\",\n\t\"fat\": \"3.80\",\n\t\"lactose\": \"7.86\",\n\t\"protein\": \"1.52\",\n\t\"energy\": \"63.66\",\n\t\"water\": \"91.52\",\n\t\"mineral\": \"0.29\",\n\t\"density\": \"1.041\",\n\t\"createTime\": \"2020-04-24 13:20:09\",\n\t\"result\": \"正常\",\n\t\"proposal\": \"非常好\",\n\t\"age\": \"3个月零4周\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "返回值示例",
+          "content": "{\"status\":0,\"msg\":\"ok\",\"result\":{\"id\":\"1267755868787073024\",\"openId\":\"ojP-tvwqOu-kwE4qxKqhFJSC3KOw\",\"breastType\":\"过渡乳\",\"fat\":\"3.80\",\"lactose\":\"7.86\",\"protein\":\"1.52\",\"energy\":\"63.66\",\"water\":\"91.52\",\"mineral\":\"0.29\",\"density\":\"1.041\",\"createTime\":\"2020-04-24 13:20:09\",\"result\":\"正常\",\"proposal\":\"非常好\",\"age\":\"3个月零4周\"},\"success\":true}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/main/java/haiying/service/breastmilk/controller/BreastMilkController.java",
+    "groupTitle": "母乳测量",
+    "name": "PostBreastmilkSavebreastmilk"
+  },
+  {
     "type": "Get",
     "url": "/user/auth",
     "title": "auth",
@@ -1030,7 +1303,7 @@
       "examples": [
         {
           "title": "返回值示例",
-          "content": "{\"userId\":0,\"openId\":\"ojP-tvwqOu-kwE4qxKqhFJSC3KOw\",\"gender\":0,\"city\":0,\"loginType\":0}",
+          "content": "{\"userId\":0,\"openId\":\"ojP-tvwqOu-kwE4qxKqhFJSC3KOw\",\"gender\":0,\"city\":0,\"loginType\":0,\"sessionKey\":\"tiihtNczf5v6AKRyjwEUhQ==\"}",
           "type": "json"
         }
       ]
@@ -1039,6 +1312,51 @@
     "filename": "src/main/java/haiying/service/auth/controller/UserController.java",
     "groupTitle": "用户权限",
     "name": "GetUserAuth"
+  },
+  {
+    "type": "post",
+    "url": "/user/getPhoneNumber",
+    "title": "getPhoneNumber",
+    "group": "用户权限",
+    "description": "<p>用户权限 手机号解密</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "json",
+            "optional": false,
+            "field": "encryptedData",
+            "description": "<p>加密数据</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "json",
+            "optional": false,
+            "field": "sessionKey",
+            "description": "<p>sessionKey</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "json",
+            "optional": false,
+            "field": "iv",
+            "description": "<p>初始向量</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "传参示例",
+          "content": "{\"encryptedData\":\"CiyLU1Aw2KjvrjMdj8YKliAjtP4gsMZMQmRzooG2xrDcvSnxIMXFufNstNGTyaGS9uT5geRa0W4oTOb1WT7fJlAC\",\"sessionKey\":\"tiihtNczf5v6AKRyjwEUhQ==\",\"iv\":\"r7BXXKkLb8qrSNn05n0qiA==\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/main/java/haiying/service/auth/controller/UserController.java",
+    "groupTitle": "用户权限",
+    "name": "PostUserGetphonenumber"
   },
   {
     "type": "Put",

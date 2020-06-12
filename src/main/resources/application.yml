@@ -1,7 +1,14 @@
 micronaut:
   application:
     name: haiying
-
+  server:
+    port: 8080
+  mybatis:
+    mapperPackage:
+      - org/example/mappers
+      - org/test/mappers
+greeting:
+  template: "Hola, %s!"
 datasources:
   default:
     url: jdbc:mysql://localhost:3306/ssmdemo?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimeZone=GMT";

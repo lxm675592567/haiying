@@ -9,16 +9,16 @@ import java.util.List;
 
 public interface RecordMapper {
 
-    @Select("select guid guid,cardId cardId,name name,sex sex,idnumber idnumber,DATE_FORMAT(birthday,'%Y-%m-%d') birthday,unionId unionId,DATE_FORMAT(createTime,'%Y-%m-%d') createTime,status status,openId openId,onlyChild onlyChild,pregnantWeek pregnantWeek,IFNULL(avatar,'')  avatar,birthHeight birthHeight,birthWeight birthWeight,pregnancySecond pregnancySecond,yieldSecond yieldSecond,address address from record where guid=#{guid} LIMIT 1")
+    @Select("select guid guid,cardId cardId,name name,sex sex,idnumber idnumber,DATE_FORMAT(birthday,'%Y-%m-%d') birthday,unionId unionId,DATE_FORMAT(createTime,'%Y-%m-%d') createTime,status status,openId openId,onlyChild onlyChild,pregnantWeek pregnantWeek,IFNULL(avatar,'')  avatar,birthHeight birthHeight,birthWeight birthWeight,pregnancySecond pregnancySecond,yieldSecond yieldSecond,address address,ptGuid ptGuid from record where guid=#{guid} LIMIT 1")
     Record findOne(String guid);
 
-    @Select("select guid guid,cardId cardId,name name,sex sex,idnumber idnumber,DATE_FORMAT(birthday,'%Y-%m-%d') birthday,unionId unionId,DATE_FORMAT(createTime,'%Y-%m-%d') createTime,status status,openId openId,onlyChild onlyChild,pregnantWeek pregnantWeek,IFNULL(avatar,'')  avatar,birthHeight birthHeight,birthWeight birthWeight,pregnancySecond pregnancySecond,yieldSecond yieldSecond,address address  from record where guid=#{guid} LIMIT 1")
+    @Select("select guid guid,cardId cardId,name name,sex sex,idnumber idnumber,DATE_FORMAT(birthday,'%Y-%m-%d') birthday,unionId unionId,DATE_FORMAT(createTime,'%Y-%m-%d') createTime,status status,openId openId,onlyChild onlyChild,pregnantWeek pregnantWeek,IFNULL(avatar,'')  avatar,birthHeight birthHeight,birthWeight birthWeight,pregnancySecond pregnancySecond,yieldSecond yieldSecond,address address,ptGuid ptGuid from record where guid=#{guid} LIMIT 1")
     JSONObject findOneNew(String guid);
 
-    @Insert("insert into record (guid,cardId,name,sex,idnumber,birthday,unionId,createTime,status,openId,onlyChild,pregnantWeek,avatar,birthHeight,birthWeight,pregnancySecond,yieldSecond,address) values(#{guid},#{cardId},#{name},#{sex},#{idnumber},#{birthday},#{unionId},#{createTime},#{status},#{openId},#{onlyChild},#{pregnantWeek},#{avatar},#{birthHeight},#{birthWeight},#{pregnancySecond},#{yieldSecond},#{address})")
+    @Insert("insert into record (guid,cardId,name,sex,idnumber,birthday,unionId,createTime,status,openId,onlyChild,pregnantWeek,avatar,birthHeight,birthWeight,pregnancySecond,yieldSecond,address,ptGuid) values(#{guid},#{cardId},#{name},#{sex},#{idnumber},#{birthday},#{unionId},#{createTime},#{status},#{openId},#{onlyChild},#{pregnantWeek},#{avatar},#{birthHeight},#{birthWeight},#{pregnancySecond},#{yieldSecond},#{address},#{ptGuid})")
     void saveRecord(Record record);
 
-    @Update("update record set name=#{name},sex=#{sex},idnumber=#{idnumber},birthday=#{birthday},status=#{status},onlyChild=#{onlyChild},pregnantWeek=#{pregnantWeek},avatar=#{avatar},birthHeight=#{birthHeight},birthWeight=#{birthWeight},pregnancySecond=#{pregnancySecond},yieldSecond=#{yieldSecond},address=#{address} where guid=#{guid}")
+    @Update("update record set name=#{name},sex=#{sex},idnumber=#{idnumber},birthday=#{birthday},status=#{status},onlyChild=#{onlyChild},pregnantWeek=#{pregnantWeek},avatar=#{avatar},birthHeight=#{birthHeight},birthWeight=#{birthWeight},pregnancySecond=#{pregnancySecond},yieldSecond=#{yieldSecond},address=#{address},ptGuid=#{ptGuid} where guid=#{guid}")
     void updateRecord(Record record);
 
     @Select("select id id,date date,cardNum cardNum  from cardNum where date=#{date}")
@@ -35,7 +35,7 @@ public interface RecordMapper {
     List<Record> getBabyArchives(String openId);
 
     @Select({"<script>",
-            "SELECT guid,cardId,name,sex,idnumber,DATE_FORMAT(birthday,'%Y-%m-%d ') birthday,unionId,DATE_FORMAT(createTime,'%Y-%m-%d ') createTime,status,openId,onlyChild,pregnantWeek,avatar,birthHeight,birthWeight,pregnancySecond,yieldSecond FROM record",
+            "SELECT guid,cardId,name,sex,idnumber,DATE_FORMAT(birthday,'%Y-%m-%d ') birthday,unionId,DATE_FORMAT(createTime,'%Y-%m-%d ') createTime,status,openId,onlyChild,pregnantWeek,avatar,birthHeight,birthWeight,pregnancySecond,yieldSecond,address,ptGuid FROM record",
             "WHERE 1=1",
             "<when test='guid!=null and guid.trim() != &quot;&quot;'>",
             "AND guid = #{guid}",
@@ -46,5 +46,17 @@ public interface RecordMapper {
             "LIMIT 1",
             "</script>"})
     JSONObject findSingleOne(String openId,String guid);
+
+    @Select({"<script>",
+            "SELECT guid,cardId,name,sex,idnumber,DATE_FORMAT(birthday,'%Y-%m-%d ') birthday,unionId,DATE_FORMAT(createTime,'%Y-%m-%d ') createTime,status,openId,onlyChild,pregnantWeek,avatar,birthHeight,birthWeight,pregnancySecond,yieldSecond,address,ptGuid FROM record",
+            "WHERE 1=1",
+            "<when test='guid!=null and guid.trim() != &quot;&quot;'>",
+            "AND guid = #{guid}",
+            "</when>",
+            "<when test='openId!=null and openId.trim() != &quot;&quot;'>",
+            "AND openId = #{openId}",
+            "</when>",
+            "</script>"})
+    List<JSONObject> findSingle(String openId,String guid);
 }
 

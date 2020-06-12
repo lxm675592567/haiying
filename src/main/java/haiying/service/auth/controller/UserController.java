@@ -3,12 +3,14 @@ package haiying.service.auth.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import haiying.service.auth.base.AppSetting;
+import haiying.service.auth.base.WxEndpoint;
 import haiying.service.auth.domain.User;
 import haiying.service.auth.service.UserService;
 import haiying.service.auth.user.SessionKey;
 import haiying.service.auth.user.Users;
 import haiying.util.CommUtil;
 import haiying.util.Result;
+import haiying.util.WXCore;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
@@ -17,6 +19,7 @@ import io.micronaut.validation.Validated;
 import lombok.RequiredArgsConstructor;
 
 import javax.inject.Inject;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
@@ -53,7 +56,7 @@ public class UserController {
      * @apiSuccess {json}height  身高
      * @apiSuccess {json}menstruation  末次月经
      * @apiSuccessExample  {json} 返回值示例
-     * {"userId":0,"openId":"ojP-tvwqOu-kwE4qxKqhFJSC3KOw","gender":0,"city":0,"loginType":0}
+     * {"userId":0,"openId":"ojP-tvwqOu-kwE4qxKqhFJSC3KOw","gender":0,"city":0,"loginType":0,"sessionKey":"tiihtNczf5v6AKRyjwEUhQ=="}
      */
     @Get("/auth")
     public User auth(String code) {
@@ -62,16 +65,17 @@ public class UserController {
         assertNotNull(sessionKey);
         //通过openid findone 获取用户信息
         String openId = sessionKey.getOpenId();
+        String sessionkey = sessionKey.getSessionKey();
         User user = UserService.findByOpenId(openId);
         if(Objects.isNull(user)){
             //如果没有,注册,并返回一个注册标识给前端
-            UserService.saveUserInfo(
+            //UserService.saveUserInfo(
                     user = new User()
-                            .setUserId(CommUtil.getGuid())
                             .setOpenId(openId)
-                            .setLoginType(1)
-            );
-            user.setLoginType(0);
+                            .setSessionKey(sessionkey)
+                            .setLoginType(0);
+           // );
+           // user.setLoginType(0);
             return user;
         }
 //        //如果有则返回全部
@@ -110,6 +114,12 @@ public class UserController {
     @Put("/updateUserInfo")
     public Result<User> updateUserInfo(User user) {
         return Result.ok(UserService.updateUserInfo(user));
+    }
+
+
+    @Post("/saveUser")
+    public Result<User> saveUser( User user) {
+        return Result.ok(UserService.saveUser(user));
     }
 
     /**
@@ -187,4 +197,26 @@ public class UserController {
     public void updateUser(JSONObject json) {
          this.UserService.updateUser(json);
     }
+
+
+    /**
+     * @api {post} /user/getPhoneNumber getPhoneNumber
+     * @apiGroup 用户权限
+     * @apiDescription 用户权限 手机号解密
+     * @apiParam {json} encryptedData 加密数据
+     * @apiParam {json} sessionKey sessionKey
+     * @apiParam {json} iv 初始向量
+     * @apiParamExample {json} 传参示例
+     * {"encryptedData":"CiyLU1Aw2KjvrjMdj8YKliAjtP4gsMZMQmRzooG2xrDcvSnxIMXFufNstNGTyaGS9uT5geRa0W4oTOb1WT7fJlAC","sessionKey":"tiihtNczf5v6AKRyjwEUhQ==","iv":"r7BXXKkLb8qrSNn05n0qiA=="}
+     */
+    @Post("/getPhoneNumber")
+    public String getPhoneNumber(JSONObject jsonObject) {
+        String appId = WxEndpoint.get("url.token.appId");
+        String encryptedData = jsonObject.getString("encryptedData");
+        String sessionKey = jsonObject.getString("sessionKey");
+        String iv = jsonObject.getString("iv");
+        String decrypt = WXCore.decrypt(appId, encryptedData, sessionKey, iv);
+        return decrypt;
+    }
+
 }

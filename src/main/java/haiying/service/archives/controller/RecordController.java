@@ -90,7 +90,7 @@ public class RecordController {
      * {"guid":"TQDV26PDGS15VAV58JA68OU5VX86GG81"}
      * @apiSuccess {json} record 宝宝基础信息
      * @apiSuccessExample  {json} 返回值示例
-     * [{"record":{"guid":"EFIWFQE15PIH69NBYDFV3LPDTXTL5ES8","cardId":"20190515000003","name":"刘静","sex":"女","birthday":"2019-04-17","ageDetail":{"year":1,"month":0,"day":27,"monthAge":12.9,"monthAgeInt":12,"ageDetail":"1岁0月27天"},"openId":"ojP-tvwqOu-kwE4qxKqhFJSC3KOw"},"name":"刘静","age":"1岁0月27天"},{"record":{"guid":"TQDV26PDGS15VAV58JA68OU5VX86GG83","cardId":"20200506000003","name":"李大白","sex":"1","birthday":"2019-04-10","ageDetail":{"year":1,"month":1,"day":4,"monthAge":13.1,"monthAgeInt":13,"ageDetail":"1岁1月4天"},"openId":"ojP-tvwqOu-kwE4qxKqhFJSC3KOw","avatar":"http://39.100.115.122:9000/bladex-chengde/upload/20200304/8ea6b9efc40f40f194c33a845f833dc3.jpg","birthHeight":"20","birthWeight":"10","pregnancySecond":"1","yieldSecond":"1"},"name":"李大白","age":"1岁1月4天"}]
+     * [{"record":{"guid":"EFIWFQE15PIH69NBYDFV3LPDTXTL5ES8","cardId":"20190515000003","name":"刘静","sex":"女","birthday":"2019-04-17","a3geDetail":{"year":1,"month":0,"day":27,"monthAge":12.9,"monthAgeInt":12,"ageDetail":"1岁0月27天"},"openId":"ojP-tvwqOu-kwE4qxKqhFJSC3KOw"},"name":"刘静","age":"1岁0月27天"},{"record":{"guid":"TQDV26PDGS15VAV58JA68OU5VX86GG83","cardId":"20200506000003","name":"李大白","sex":"1","birthday":"2019-04-10","ageDetail":{"year":1,"month":1,"day":4,"monthAge":13.1,"monthAgeInt":13,"ageDetail":"1岁1月4天"},"openId":"ojP-tvwqOu-kwE4qxKqhFJSC3KOw","avatar":"http://39.100.115.122:9000/bladex-chengde/upload/20200304/8ea6b9efc40f40f194c33a845f833dc3.jpg","birthHeight":"20","birthWeight":"10","pregnancySecond":"1","yieldSecond":"1"},"name":"李大白","age":"1岁1月4天"}]
      */
     @Get("/getBabyArchives")
     public List<JSONObject> getBabyArchives(String openId) {
@@ -116,5 +116,12 @@ public class RecordController {
     public JSONObject  findMessageOne(JSONObject jsonObject) {
         return  this.recordService.findMessageNew(jsonObject);
     }
+    @Post("/uploadFile")
+    public String uploadFile(JSONObject json) throws Exception {
+        String file = json.getString("file");
+        String ImgUrl = recordService.uploadFile(file);
+        return ImgUrl;
+    }
+
 
 }

@@ -11,7 +11,7 @@ public class User {
     public User() {
     }
 
-    public User(String userId, String openId, String unionId, String nickName, int gender, String country, String province, String city, String avatarUrl, String avatar, Date createTime, int loginType, Date birthday, String phone, String height, String menstruation, String tenantId, String tenantName, String occupation) {
+    public User(String userId, String openId, String unionId, String nickName, int gender, String country, String province, String city, String avatarUrl, String avatar, Date createTime, int loginType, Date birthday, String phone, String height, String menstruation, String tenantId, String tenantName, String occupation, String sessionKey) {
         this.userId = userId;
         this.openId = openId;
         this.unionId = unionId;
@@ -31,6 +31,7 @@ public class User {
         this.tenantId = tenantId;
         this.tenantName = tenantName;
         this.occupation = occupation;
+        this.sessionKey = sessionKey;
     }
 
     private String userId;    //主键id
@@ -72,6 +73,8 @@ public class User {
     private String tenantName;  //租户名称
 
     private String occupation;  //职业
+
+    private String sessionKey; //session_key
 
     public String getUserId() {
         return userId;
@@ -241,6 +244,15 @@ public class User {
 
     public User setAvatar(String avatar) {
         this.avatar = avatar;
+        return this;
+    }
+
+    public String getSessionKey() {
+        return sessionKey;
+    }
+
+    public User setSessionKey(String sessionKey) {
+        this.sessionKey = sessionKey;
         return this;
     }
 }

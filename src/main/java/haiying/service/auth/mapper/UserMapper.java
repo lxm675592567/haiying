@@ -6,10 +6,10 @@ import org.apache.ibatis.annotations.*;
 
 public interface UserMapper {
 
-    @Select("select userId userId,openId openId,unionId unionId,nickName nickName,gender gender,country country,province province,city city,avatarUrl avatarUrl,avatar avatar,DATE_FORMAT(createTime,'%Y-%m-%d') createTime,loginType loginType,DATE_FORMAT(birthday,'%Y-%m-%d') birthday,phone phone,height height,menstruation menstruation,tenantId tenantId,tenantName tenantName,occupation occupation from user where userid=#{userid} LIMIT 1")
+    @Select("select userId userId,openId openId,unionId unionId,nickName nickName,gender gender,country country,province province,city city,avatarUrl avatarUrl,avatar avatar,DATE_FORMAT(createTime,'%Y-%m-%d') createTime,loginType loginType,DATE_FORMAT(birthday,'%Y-%m-%d') birthday,phone phone,height height,menstruation menstruation,tenantId tenantId,tenantName tenantName,occupation occupation,session_key sessionKey from user where userid=#{userid} LIMIT 1")
     User findById(long id);
 
-    @Select("select userId userId,openId openId,unionId unionId,nickName nickName,gender gender,country country,province province,city city,avatarUrl avatarUrl,avatar avatar,DATE_FORMAT(createTime,'%Y-%m-%d') createTime,loginType loginType,DATE_FORMAT(birthday,'%Y-%m-%d') birthday,phone phone,height height,menstruation menstruation,tenantId tenantId,tenantName tenantName,occupation occupation from user where openId=#{openId}  LIMIT 1")
+    @Select("select userId userId,openId openId,unionId unionId,nickName nickName,gender gender,country country,province province,city city,avatarUrl avatarUrl,avatar avatar,DATE_FORMAT(createTime,'%Y-%m-%d') createTime,loginType loginType,DATE_FORMAT(birthday,'%Y-%m-%d') birthday,phone phone,height height,menstruation menstruation,tenantId tenantId,tenantName tenantName,occupation occupation,session_key sessionKey from user where openId=#{openId}  LIMIT 1")
     User findByOpenId(String openId);
 
     //@Update("update user set unionId=#{unionId},nickName=#{nickName},gender=#{gender},country=#{country},province=#{province},city=#{city},avatarUrl=#{avatarUrl},createTime=#{createTime},
@@ -36,10 +36,10 @@ public interface UserMapper {
             "</script>"})
     void updateUserInfo(User user);
 
-    @Insert("insert into user (userId,unionId,nickName,gender,country,province,city,avatarUrl,createTime,openId,loginType) values(#{userId},#{unionId},#{nickName},#{gender},#{country},#{province},#{city},#{avatarUrl},#{createTime},#{openId},#{loginType})")
+    @Insert("insert into user (userId,unionId,nickName,gender,country,province,city,avatarUrl,createTime,openId,loginType,session_key,phone) values(#{userId},#{unionId},#{nickName},#{gender},#{country},#{province},#{city},#{avatarUrl},#{createTime},#{openId},#{loginType},#{sessionKey},#{phone})")
     @Options(useGeneratedKeys = true)
     void saveUserInfo(User user);
 
-    @Select("select userId userId,openId openId,unionId unionId,nickName nickName,gender gender,country country,province province,city city,avatarUrl avatarUrl,IFNULL(avatar,'') avatar,DATE_FORMAT(createTime,'%Y-%m-%d') createTime,loginType loginType,DATE_FORMAT(birthday,'%Y-%m-%d') birthday,phone phone,height height,menstruation menstruation,tenantId tenantId,tenantName tenantName,occupation occupation from user where openId=#{openId} LIMIT 1")
+    @Select("select userId userId,openId openId,unionId unionId,nickName nickName,gender gender,country country,province province,city city,avatarUrl avatarUrl,IFNULL(avatar,'') avatar,DATE_FORMAT(createTime,'%Y-%m-%d') createTime,loginType loginType,DATE_FORMAT(birthday,'%Y-%m-%d') birthday,phone phone,height height,menstruation menstruation,tenantId tenantId,tenantName tenantName,occupation occupation,session_key sessionKey from user where openId=#{openId} LIMIT 1")
     JSONObject findOne(String openId);
 }

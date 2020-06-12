@@ -23,4 +23,6 @@ public interface UserService {
     JSONObject findAreaList();
 
     void updateUser(JSONObject json);
+
+    User saveUser(User user);
 }
