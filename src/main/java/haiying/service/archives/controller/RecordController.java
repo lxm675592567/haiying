@@ -16,7 +16,7 @@ import java.util.List;
 
 
 @Validated
-@Controller("/haoyun1/archives/record")
+@Controller("/haoyunyi/archives/record")
 public class RecordController {
 
     private final RecordService recordService;

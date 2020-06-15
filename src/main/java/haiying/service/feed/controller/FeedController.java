@@ -16,7 +16,7 @@ import java.util.List;
 
 
 @Validated
-@Controller("/haoyun1/feed")
+@Controller("/haoyunyi/feed")
 public class FeedController {
 
     private final FeedService feedService;

@@ -26,7 +26,7 @@ import java.util.UUID;
 
 import static junit.framework.TestCase.assertNotNull;
 @Validated // <1>
-@Controller("/haoyun1/user")
+@Controller("/haoyunyi/user")
 public class UserController {
 
     private final UserService UserService;

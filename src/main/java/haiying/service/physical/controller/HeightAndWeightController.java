@@ -14,7 +14,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Validated
-@Controller("/haoyun1/physical/heightAndWeight")
+@Controller("/haoyunyi/physical/heightAndWeight")
 public class HeightAndWeightController {
 
     private final HeightAndWeightService heightAndWeightService;

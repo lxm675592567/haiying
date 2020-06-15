@@ -17,7 +17,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Validated
-@Controller("/haoyun1/breastMilk")
+@Controller("/haoyunyi/breastMilk")
 public class BreastMilkController {
 
     private final BreastMilkService breastMilkService;
