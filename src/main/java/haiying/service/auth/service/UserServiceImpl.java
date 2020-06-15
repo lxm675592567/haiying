@@ -164,9 +164,19 @@ public class UserServiceImpl implements UserService {
             JSONArray jsonArray = result.getJSONObject("resultData").getJSONArray("list");
               if(jsonArray.isEmpty()||jsonArray.size()<1){
                 //保存到平台
-                DateUtil.Age age = DateUtil.getAge(user.getBirthday());
                 JSONObject jsonParam = new JSONObject();
-                jsonParam.put("wxOpenId",openId);jsonParam.put("tenantId",tenantId);jsonParam.put("id",user.getUserId());jsonParam.put("name",user.getNickName());jsonParam.put("occupation",user.getOccupation());jsonParam.put("phoneNumber",phone);jsonParam.put("wxUnionId",user.getUnionId());jsonParam.put("age",age.getYear());
+                if (StringUtil.stringIsNotNull(user.getBirthday())){
+                    DateUtil.Age age = DateUtil.getAge(user.getBirthday());
+                    jsonParam.put("age",age.getYear());
+                }
+                jsonParam.fluentPut("wxOpenId",openId)
+                        .fluentPut("tenantId",tenantId)
+                        .fluentPut("id",user.getUserId())
+                        .fluentPut("name",user.getNickName())
+                        .fluentPut("occupation",user.getOccupation())
+                        .fluentPut("phoneNumber",phone)
+                        .fluentPut("wxUnionId",user.getUnionId());
+
                 System.out.println("jsonParam="+jsonParam);
                 String postUrl = HttpclientUtil.get("httpclient.motherInfo.post");
                 HttpclientUtil.httpPost(postUrl, jsonParam);
