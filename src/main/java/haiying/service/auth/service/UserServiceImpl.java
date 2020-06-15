@@ -160,7 +160,9 @@ public class UserServiceImpl implements UserService {
             JSONObject result = JSONObject.parseObject(httpGet);
 
 //            System.out.println("jsonArray="+jsonArray);
-            if(Objects.isNull(result)){
+            //if(Objects.isNull(result)){
+            JSONArray jsonArray = result.getJSONObject("resultData").getJSONArray("list");
+              if(jsonArray.isEmpty()||jsonArray.size()<1){
                 //保存到平台
                 DateUtil.Age age = DateUtil.getAge(user.getBirthday());
                 JSONObject jsonParam = new JSONObject();
@@ -168,16 +170,16 @@ public class UserServiceImpl implements UserService {
                 System.out.println("jsonParam="+jsonParam);
                 String postUrl = HttpclientUtil.get("httpclient.motherInfo.post");
                 HttpclientUtil.httpPost(postUrl, jsonParam);
-            }else {
-                JSONArray jsonArray = result.getJSONObject("resultData").getJSONArray("list");
-                JSONObject motherInfo = (JSONObject) jsonArray.get(0);
-                user.setOccupation(motherInfo.getString("occupation"))
-                        .setUnionId(motherInfo.getString("wxUnionId"))
-                        .setUserId(motherInfo.getString("id"))
-                        .setNickName(user.getNickName())
-                        .setBirthday(user.getBirthday())
-                        .setTenantName(user.getTenantName());
             }
+//              else {
+//                JSONObject motherInfo = (JSONObject) jsonArray.get(0);
+//                user.setOccupation(motherInfo.getString("occupation"))
+//                        .setUnionId(motherInfo.getString("wxUnionId"))
+//                        .setUserId(motherInfo.getString("id"))
+//                        .setNickName(user.getNickName())
+//                        .setBirthday(user.getBirthday())
+//                        .setTenantName(user.getTenantName());
+//            }
         }
 
         userMapper.saveUserInfo(user);
