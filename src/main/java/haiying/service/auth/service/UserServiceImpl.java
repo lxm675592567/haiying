@@ -180,16 +180,15 @@ public class UserServiceImpl implements UserService {
                 System.out.println("jsonParam="+jsonParam);
                 String postUrl = HttpclientUtil.get("httpclient.motherInfo.post");
                 HttpclientUtil.httpPost(postUrl, jsonParam);
+            } else {
+                JSONObject motherInfo = (JSONObject) jsonArray.get(0);
+                user.setOccupation(motherInfo.getString("occupation"))
+                        .setUnionId(motherInfo.getString("wxUnionId"))
+                        .setUserId(motherInfo.getString("id"))
+                        .setNickName(user.getNickName())
+                        .setBirthday(user.getBirthday())
+                        .setTenantName(user.getTenantName());
             }
-//              else {
-//                JSONObject motherInfo = (JSONObject) jsonArray.get(0);
-//                user.setOccupation(motherInfo.getString("occupation"))
-//                        .setUnionId(motherInfo.getString("wxUnionId"))
-//                        .setUserId(motherInfo.getString("id"))
-//                        .setNickName(user.getNickName())
-//                        .setBirthday(user.getBirthday())
-//                        .setTenantName(user.getTenantName());
-//            }
         }
 
         userMapper.saveUserInfo(user);
