@@ -303,10 +303,10 @@ public class RecordServiceImpl implements RecordService {
                                 re.setSex(job.getString("sex"));
                                 re.setTenantId(job.getString("tenantId"));
                                 re.setOpenId(job.getJSONObject("motherInfo").getString("wxOpenId"));
-                                Record Rs = recordMapper.findOne(guid);
-                                if (!Objects.isNull(Rs)){
-                                    continue;
-                                }
+//                                Record Rs = recordMapper.findOne(ptGuid);
+//                                if (!Objects.isNull(Rs)){
+//                                    continue;
+//                                }
                                 recordMapper.saveRecord(re);
                                 //把remoteId guid 传过去 让平台加上remoteId
                                 JSONObject jsonParam = new JSONObject();
