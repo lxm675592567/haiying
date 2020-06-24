@@ -58,6 +58,13 @@ public class RecordServiceImpl implements RecordService {
     @Override
     public Record saveUpdateRecord(Record record) {
         String guid = record.getGuid();
+        String name = record.getName();
+        String sex = record.getSex();
+        Date birthday = record.getBirthday();
+        String openId = record.getOpenId();
+        if (StringUtil.stringIsNull(name)&&StringUtil.stringIsNull(guid)&&StringUtil.stringIsNull(sex)&&StringUtil.stringIsNull(birthday)&&StringUtil.stringIsNull(openId)){
+            return null;
+        }
         Record one = recordMapper.findOne(guid);
         if (!Objects.isNull(one)) {
             recordMapper.updateRecord(record);
@@ -279,83 +286,42 @@ public class RecordServiceImpl implements RecordService {
                     String postUrl = HttpclientUtil.get("httpclient.record.post");
                     HttpclientUtil.httpPost(postUrl, jsonParam);
                 }
-            } else {
-                if (single.size() < jsonArray.size()) {//本地single必须小于jsonArray平台数才符合规则
-                    for (JSONObject obj : single) { //先循环本地数据 本地<=平台
-                        String pt = obj.getString("ptGuid"); //本地 远程id
-                        for (int i = 0; i < jsonArray.size(); i++) { //循环平台数据
-                            JSONObject job = jsonArray.getJSONObject(i);
-                            String ptGuid = job.getString("ptGuid");
-                            if (!pt.equals(ptGuid)) {
-                                re.setGuid(CommUtil.getGuid());
-                                re.setPtGuid(job.getString("guid"));
-                                re.setCardId(job.getString("cardId"));
-                                re.setBirthday(job.getDate("birthday"));
-                                re.setName(job.getString("name"));
-                                re.setSex(job.getString("sex"));
-                                re.setTenantId(job.getString("tenantId"));
-                                re.setOpenId(job.getJSONObject("motherInfo").getString("wxOpenId"));
-                                recordMapper.saveRecord(re);
-                                //把remoteId guid 传过去 让平台加上remoteId
-                                JSONObject jsonParam = new JSONObject();
-                                jsonParam.put("guid", re.getPtGuid());
-                                jsonParam.put("remoteId", re.getGuid());
-                                jsonParam.put("motherId", user.getUserId());
-                                jsonParam.put("resource", "母乳小程序");
-                                jsonParam.put("birthday", re.getBirthday());
-                                jsonParam.put("name", re.getName());
-                                jsonParam.put("sex", re.getSex());
-                                String postUrl = HttpclientUtil.get("httpclient.record.post");
-                                HttpclientUtil.httpPost(postUrl, jsonParam);
-                            }
-                        }
-                    }
-                }
             }
+//            else {
+//                if (single.size() < jsonArray.size()) {//本地single必须小于jsonArray平台数才符合规则
+//                    for (JSONObject obj : single) { //先循环本地数据 本地<=平台
+//                        String pt = obj.getString("ptGuid"); //本地 远程id
+//                        for (int i = 0; i < jsonArray.size(); i++) { //循环平台数据
+//                            JSONObject job = jsonArray.getJSONObject(i);
+//                            String ptGuid = job.getString("ptGuid");
+//                            if (!pt.equals(ptGuid)) {
+//                                re.setGuid(CommUtil.getGuid());
+//                                re.setPtGuid(job.getString("guid"));
+//                                re.setCardId(job.getString("cardId"));
+//                                re.setBirthday(job.getDate("birthday"));
+//                                re.setName(job.getString("name"));
+//                                re.setSex(job.getString("sex"));
+//                                re.setTenantId(job.getString("tenantId"));
+//                                re.setOpenId(job.getJSONObject("motherInfo").getString("wxOpenId"));
+//                                recordMapper.saveRecord(re);
+//                                //把remoteId guid 传过去 让平台加上remoteId
+//                                JSONObject jsonParam = new JSONObject();
+//                                jsonParam.put("guid", re.getPtGuid());
+//                                jsonParam.put("remoteId", re.getGuid());
+//                                jsonParam.put("motherId", user.getUserId());
+//                                jsonParam.put("resource", "母乳小程序");
+//                                jsonParam.put("birthday", re.getBirthday());
+//                                jsonParam.put("name", re.getName());
+//                                jsonParam.put("sex", re.getSex());
+//                                String postUrl = HttpclientUtil.get("httpclient.record.post");
+//                                HttpclientUtil.httpPost(postUrl, jsonParam);
+//                            }
+//                        }
+//                    }
+//                }
+//            }
         }
 
-
-//        User user = userMapper.findByOpenId(openId); //先查询母亲信息
-//        String url = HttpclientUtil.get("httpclient.listByMotherInfo.get")+"wxOpenId="+openId+"&phoneNumber="+user.getPhone(); //孩子查询接口地址
-//        String httpGet = HttpclientUtil.httpGet(url);
-//        JSONObject result = JSONObject.parseObject(httpGet);
-//        JSONArray jsonArray = result.getJSONArray("resultData");//获取孩子接口信息
-//        if(jsonArray.isEmpty()||jsonArray.size()<1){//查询平台没有孩子信息
-//            //本地有1个 平台无 则保存到平台
-//            if (!Objects.isNull(one)) {
-//                JSONObject jsonParam = new JSONObject();
-//                jsonParam.put("remoteId", one.getString("guid"));
-//                jsonParam.put("birthday", one.getString("birthday"));
-//                jsonParam.put("name", one.getString("name"));
-//                jsonParam.put("sex", one.getString("sex"));
-//                jsonParam.put("tenantId", user.getTenantId());
-//                jsonParam.put("motherId", user.getUserId());
-//                //没有则保存
-//                String postUrl = HttpclientUtil.get("httpclient.record.post");
-//                String httpPost = HttpclientUtil.httpPost(postUrl, jsonParam);
-//                JSONObject ptResult = JSONObject.parseObject(httpPost);
-//                JSONObject resultData = ptResult.getJSONObject("resultData");
-//                Record record = JSONObject.toJavaObject(one, Record.class);
-//                record.setCardId(resultData.getString("cardId"));
-//                record.setPtGuid(resultData.getString("guid"));
-//                recordMapper.updateRecord(record);
-//            }else {
-//                return object;
-//            }
-//        }else{
-//            //本地无  平台有  直接查询保存
-//            if(Objects.isNull(one)){
-//                //查询出平台,然后保存
-//                Record record = new Record();
-//                //guid(主键生成)
-//                //record.
-//
-//
-//                //recordMapper.saveRecord();
-//            }else {
-//                //本地有  平台有  对比
-//            }
-//        }
 
         if (Objects.isNull(one)) {
             return object;
@@ -515,8 +481,8 @@ public class RecordServiceImpl implements RecordService {
         b = com.sun.org.apache.xml.internal.security.utils.Base64.decode(baseImg.replaceAll(" ", "+"));
         //生成路径
         String pathUrl = HttpclientUtil.get("file.ImgUrl")  + separator + "img" + separator + nowDate + separator;
-        String path = HttpclientUtil.get("file.ImgUrl.post")  + separator + "img" + separator + nowDate + separator;
-        //String path = "D:\\项目\\haiying\\file"  + separator + "img" + separator + nowDate + separator;
+       // String path = HttpclientUtil.get("file.ImgUrl.post")  + separator + "img" + separator + nowDate + separator;
+        String path = "D:\\项目\\haiying\\file"  + separator + "img" + separator + nowDate + separator;
         //随机生成图片的名字，同时根据类型结尾
         fileName = UUID.randomUUID().toString() + "." + type;
         File file = new File(path);
