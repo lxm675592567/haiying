@@ -287,39 +287,43 @@ public class RecordServiceImpl implements RecordService {
                     HttpclientUtil.httpPost(postUrl, jsonParam);
                 }
             }
-//            else {
-//                if (single.size() < jsonArray.size()) {//本地single必须小于jsonArray平台数才符合规则
-//                    for (JSONObject obj : single) { //先循环本地数据 本地<=平台
-//                        String pt = obj.getString("ptGuid"); //本地 远程id
-//                        for (int i = 0; i < jsonArray.size(); i++) { //循环平台数据
-//                            JSONObject job = jsonArray.getJSONObject(i);
-//                            String ptGuid = job.getString("ptGuid");
-//                            if (!pt.equals(ptGuid)) {
-//                                re.setGuid(CommUtil.getGuid());
-//                                re.setPtGuid(job.getString("guid"));
-//                                re.setCardId(job.getString("cardId"));
-//                                re.setBirthday(job.getDate("birthday"));
-//                                re.setName(job.getString("name"));
-//                                re.setSex(job.getString("sex"));
-//                                re.setTenantId(job.getString("tenantId"));
-//                                re.setOpenId(job.getJSONObject("motherInfo").getString("wxOpenId"));
-//                                recordMapper.saveRecord(re);
-//                                //把remoteId guid 传过去 让平台加上remoteId
-//                                JSONObject jsonParam = new JSONObject();
-//                                jsonParam.put("guid", re.getPtGuid());
-//                                jsonParam.put("remoteId", re.getGuid());
-//                                jsonParam.put("motherId", user.getUserId());
-//                                jsonParam.put("resource", "母乳小程序");
-//                                jsonParam.put("birthday", re.getBirthday());
-//                                jsonParam.put("name", re.getName());
-//                                jsonParam.put("sex", re.getSex());
-//                                String postUrl = HttpclientUtil.get("httpclient.record.post");
-//                                HttpclientUtil.httpPost(postUrl, jsonParam);
-//                            }
-//                        }
-//                    }
-//                }
-//            }
+            else {
+                if (single.size() < jsonArray.size()) {//本地single必须小于jsonArray平台数才符合规则
+                    for (JSONObject obj : single) { //先循环本地数据 本地<=平台
+                        String pt = obj.getString("ptGuid"); //本地 远程id
+                        for (int i = 0; i < jsonArray.size(); i++) { //循环平台数据
+                            JSONObject job = jsonArray.getJSONObject(i);
+                            String ptGuid = job.getString("guid");
+                            if (!pt.equals(ptGuid)) {
+                                re.setGuid(CommUtil.getGuid());
+                                re.setPtGuid(job.getString("guid"));
+                                re.setCardId(job.getString("cardId"));
+                                re.setBirthday(job.getDate("birthday"));
+                                re.setName(job.getString("name"));
+                                re.setSex(job.getString("sex"));
+                                re.setTenantId(job.getString("tenantId"));
+                                re.setOpenId(job.getJSONObject("motherInfo").getString("wxOpenId"));
+                                Record Rs = recordMapper.findOne(guid);
+                                if (!Objects.isNull(Rs)){
+                                    continue;
+                                }
+                                recordMapper.saveRecord(re);
+                                //把remoteId guid 传过去 让平台加上remoteId
+                                JSONObject jsonParam = new JSONObject();
+                                jsonParam.put("guid", re.getPtGuid());
+                                jsonParam.put("remoteId", re.getGuid());
+                                jsonParam.put("motherId", user.getUserId());
+                                jsonParam.put("resource", "母乳小程序");
+                                jsonParam.put("birthday", re.getBirthday());
+                                jsonParam.put("name", re.getName());
+                                jsonParam.put("sex", re.getSex());
+                                String postUrl = HttpclientUtil.get("httpclient.record.post");
+                                HttpclientUtil.httpPost(postUrl, jsonParam);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
 
