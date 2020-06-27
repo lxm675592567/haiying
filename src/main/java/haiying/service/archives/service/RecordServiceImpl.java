@@ -250,7 +250,7 @@ public class RecordServiceImpl implements RecordService {
             return object;
         }
         JSONObject one = recordMapper.findSingleOne(openId, guid); //查询是否有孩子信息
-        List<JSONObject> single = recordMapper.findSingle(openId, guid);
+        List<JSONObject> single = recordMapper.findSingle(openId);
         //平台查询
         User user = userMapper.findByOpenId(openId); //先查询母亲信息
         String url = HttpclientUtil.get("httpclient.listByMotherInfo.get") + "wxOpenId=" + openId + "&phoneNumber=" + user.getPhone(); //孩子查询接口地址
@@ -289,37 +289,41 @@ public class RecordServiceImpl implements RecordService {
             }
             else {
                 if (single.size() < jsonArray.size()) {//本地single必须小于jsonArray平台数才符合规则
-                    for (JSONObject obj : single) { //先循环本地数据 本地<=平台
-                        String pt = obj.getString("ptGuid"); //本地 远程id
-                        for (int i = 0; i < jsonArray.size(); i++) { //循环平台数据
-                            JSONObject job = jsonArray.getJSONObject(i);
-                            String ptGuid = job.getString("guid");
-                            if (!pt.equals(ptGuid)) {
-                                re.setGuid(CommUtil.getGuid());
-                                re.setPtGuid(job.getString("guid"));
-                                re.setCardId(job.getString("cardId"));
-                                re.setBirthday(job.getDate("birthday"));
-                                re.setName(job.getString("name"));
-                                re.setSex(job.getString("sex"));
-                                re.setTenantId(job.getString("tenantId"));
-                                re.setOpenId(job.getJSONObject("motherInfo").getString("wxOpenId"));
+                    for (int i = 0; i < jsonArray.size(); i++) {
+                        JSONObject job = jsonArray.getJSONObject(i);
+                        String ptGuid = job.getString("guid");
+                        int type = 0;
+                        for (JSONObject obj : single) {
+                            String pt = obj.getString("ptGuid"); //本地 远程id
+                            if (pt.equals(ptGuid)) {
+                                type = 1;
+                            }
+                        }
+                        if (type == 0){
+                            re.setGuid(CommUtil.getGuid());
+                            re.setPtGuid(job.getString("guid"));
+                            re.setCardId(job.getString("cardId"));
+                            re.setBirthday(job.getDate("birthday"));
+                            re.setName(job.getString("name"));
+                            re.setSex(job.getString("sex"));
+                            re.setTenantId(job.getString("tenantId"));
+                            re.setOpenId(job.getJSONObject("motherInfo").getString("wxOpenId"));
 //                                Record Rs = recordMapper.findOne(ptGuid);
 //                                if (!Objects.isNull(Rs)){
 //                                    continue;
 //                                }
-                                recordMapper.saveRecord(re);
-                                //把remoteId guid 传过去 让平台加上remoteId
-                                JSONObject jsonParam = new JSONObject();
-                                jsonParam.put("guid", re.getPtGuid());
-                                jsonParam.put("remoteId", re.getGuid());
-                                jsonParam.put("motherId", user.getUserId());
-                                jsonParam.put("resource", "母乳小程序");
-                                jsonParam.put("birthday", re.getBirthday());
-                                jsonParam.put("name", re.getName());
-                                jsonParam.put("sex", re.getSex());
-                                String postUrl = HttpclientUtil.get("httpclient.record.post");
-                                HttpclientUtil.httpPost(postUrl, jsonParam);
-                            }
+                            recordMapper.saveRecord(re);
+                            //把remoteId guid 传过去 让平台加上remoteId
+                            JSONObject jsonParam = new JSONObject();
+                            jsonParam.put("guid", re.getPtGuid());
+                            jsonParam.put("remoteId", re.getGuid());
+                            jsonParam.put("motherId", user.getUserId());
+                            jsonParam.put("resource", "母乳小程序");
+                            jsonParam.put("birthday", re.getBirthday());
+                            jsonParam.put("name", re.getName());
+                            jsonParam.put("sex", re.getSex());
+                            String postUrl = HttpclientUtil.get("httpclient.record.post");
+                            HttpclientUtil.httpPost(postUrl, jsonParam);
                         }
                     }
                 }

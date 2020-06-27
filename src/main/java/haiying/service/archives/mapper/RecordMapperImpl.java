@@ -86,9 +86,9 @@ public class RecordMapperImpl implements RecordMapper {
     }
 
     @Override
-    public List<JSONObject> findSingle(String openId, String guid) {
+    public List<JSONObject> findSingle(String openId) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-            return getRecordMapperr(sqlSession).findSingle(openId,guid);
+            return getRecordMapperr(sqlSession).findSingle(openId);
         }
     }
 

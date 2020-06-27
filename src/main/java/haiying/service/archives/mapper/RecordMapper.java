@@ -31,7 +31,7 @@ public interface RecordMapper {
     @Options(useGeneratedKeys=true, keyProperty="id", keyColumn="id")
     void insertOneCardNum(CardNum cardNum);
 
-    @Select("select * from record where openId=#{openId}")
+    @Select("select guid guid,cardId cardId,name name,sex sex,idnumber idnumber,DATE_FORMAT(birthday,'%Y-%m-%d') birthday,unionId unionId,DATE_FORMAT(createTime,'%Y-%m-%d') createTime,status status,openId openId,onlyChild onlyChild,pregnantWeek pregnantWeek,IFNULL(avatar,'')  avatar,birthHeight birthHeight,birthWeight birthWeight,pregnancySecond pregnancySecond,yieldSecond yieldSecond,address address,ptGuid ptGuid from record where openId=#{openId}")
     List<Record> getBabyArchives(String openId);
 
     @Select({"<script>",
@@ -50,13 +50,13 @@ public interface RecordMapper {
     @Select({"<script>",
             "SELECT guid,cardId,name,sex,idnumber,DATE_FORMAT(birthday,'%Y-%m-%d ') birthday,unionId,DATE_FORMAT(createTime,'%Y-%m-%d ') createTime,status,openId,onlyChild,pregnantWeek,avatar,birthHeight,birthWeight,pregnancySecond,yieldSecond,address,ptGuid FROM record",
             "WHERE 1=1",
-            "<when test='guid!=null and guid.trim() != &quot;&quot;'>",
-            "AND guid = #{guid}",
-            "</when>",
+//            "<when test='guid!=null and guid.trim() != &quot;&quot;'>",
+//            "AND guid = #{guid}",
+//            "</when>",
             "<when test='openId!=null and openId.trim() != &quot;&quot;'>",
             "AND openId = #{openId}",
             "</when>",
             "</script>"})
-    List<JSONObject> findSingle(String openId,String guid);
+    List<JSONObject> findSingle(@Param(value="openId")String openId);
 }
 
