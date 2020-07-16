@@ -489,8 +489,8 @@ public class RecordServiceImpl implements RecordService {
         b = com.sun.org.apache.xml.internal.security.utils.Base64.decode(baseImg.replaceAll(" ", "+"));
         //生成路径
         String pathUrl = HttpclientUtil.get("file.ImgUrl")  + separator + "img" + separator + nowDate + separator;
-       // String path = HttpclientUtil.get("file.ImgUrl.post")  + separator + "img" + separator + nowDate + separator;
-        String path = "D:\\项目\\haiying\\file"  + separator + "img" + separator + nowDate + separator;
+        String path = HttpclientUtil.get("file.ImgUrl.post")  + separator + "img" + separator + nowDate + separator;
+        //String path = "D:\\项目\\haiying\\file"  + separator + "img" + separator + nowDate + separator;
         //随机生成图片的名字，同时根据类型结尾
         fileName = UUID.randomUUID().toString() + "." + type;
         File file = new File(path);
