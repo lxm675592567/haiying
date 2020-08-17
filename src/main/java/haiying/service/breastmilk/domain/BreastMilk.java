@@ -5,7 +5,7 @@ public class BreastMilk {
     public BreastMilk() {
     }
 
-    public BreastMilk(String id, String openId, String breastType, String fat, String lactose, String protein, String energy, String water, String mineral, String density, String createTime, String result, String proposal, String age) {
+    public BreastMilk(String id, String openId, String breastType, String fat, String lactose, String protein, String energy, String water, String mineral, String density, String createTime, String result, String proposal, String age, String guid) {
         this.id = id;
         this.openId = openId;
         this.breastType = breastType;
@@ -20,6 +20,7 @@ public class BreastMilk {
         this.result = result;
         this.proposal = proposal;
         this.age = age;
+        this.guid = guid;
     }
 
     /**
@@ -41,6 +42,15 @@ public class BreastMilk {
      * 脂肪
      */
     private String fat;
+
+    public String getGuid() {
+        return guid;
+    }
+
+    public BreastMilk setGuid(String guid) {
+        this.guid = guid;
+        return this;
+    }
 
     /**
      * 乳糖
@@ -76,6 +86,8 @@ public class BreastMilk {
      * 时间
      */
     private String createTime;
+
+    private String guid;
 
     /**
      * 结果
