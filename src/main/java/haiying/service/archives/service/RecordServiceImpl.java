@@ -199,9 +199,10 @@ public class RecordServiceImpl implements RecordService {
             ArrayList<JSONObject> daily = new ArrayList<>();
             for (JSONObject feed : pagination) {
                 String type = feed.getString("type");
+                String id = feed.getString("id");
                 Date date = feed.getDate("createTime");
                 String times = String.format("%tR", date);
-                JSONObject dailyRecord = feedMapper.getDailyRecord(guid, type);
+                JSONObject dailyRecord = feedMapper.getDailyRecord(guid, type,id);
                 String typeName = dailyRecord.getString("typeName");
 
                 String state = "";
@@ -286,8 +287,7 @@ public class RecordServiceImpl implements RecordService {
                     String postUrl = HttpclientUtil.get("httpclient.record.post");
                     HttpclientUtil.httpPost(postUrl, jsonParam);
                 }
-            }
-            else {
+            } else {
                 if (single.size() < jsonArray.size()) {//本地single必须小于jsonArray平台数才符合规则
                     for (int i = 0; i < jsonArray.size(); i++) {
                         JSONObject job = jsonArray.getJSONObject(i);
@@ -360,9 +360,10 @@ public class RecordServiceImpl implements RecordService {
             for (JSONObject feed : pagination) {
                 if (feed.getString("days").equals(day)) {
                     String type = feed.getString("type");
+                    String id = feed.getString("id");
                     Date date = feed.getDate("createTime");
                     String times = String.format("%tR", date);
-                    JSONObject dailyRecord = feedMapper.getDailyRecord(guid, type);
+                    JSONObject dailyRecord = feedMapper.getDailyRecord(guid, type,id);
                     String typeName = dailyRecord.getString("typeName");
 
                     String state = "";

@@ -59,9 +59,10 @@ public class FeedServiceImpl implements FeedService {
         List<JSONObject> daily = new ArrayList<>();
         for (JSONObject feed : feedTodayList) {
             String type = feed.getString("type");
+            String id = feed.getString("id");
             Date date = feed.getDate("createTime");
             String time = String.format("%tR", date);
-            JSONObject dailyRecord = feedMapper.getDailyRecord(guid, type);
+            JSONObject dailyRecord = feedMapper.getDailyRecord(guid, type,id);
             String typeName = dailyRecord.getString("typeName");
 
             String state ="";

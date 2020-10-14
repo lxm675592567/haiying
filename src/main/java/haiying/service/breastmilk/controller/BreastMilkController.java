@@ -86,9 +86,6 @@ public class BreastMilkController {
      * @apiSuccess {json}mineral 矿物质
      * @apiSuccess {json}density 密度
      * @apiSuccess {json}createTime 时间
-     * @apiSuccess {json}result 结果
-     * @apiSuccess {json}proposal 指导建议
-     * @apiSuccess {json}age 年龄
      * @apiSuccessExample  {json} 返回值示例
      * [{"proposal":"非常好","density":"1.041","openId":"ojP-tvwqOu-kwE4qxKqhFJSC3KOw","lactose":"7.86","water":"91.52","result":"正常","createTime":"2020-04-24 13:20:09","breastType":"过渡乳","protein":"1.52","fat":"3.80","mineral":"0.29","age":"3个月零4周","energy":"63.66"},{"proposal":"非常好","density":"1.041","openId":"ojP-tvwqOu-kwE4qxKqhFJSC3KOw","lactose":"7.86","water":"91.52","result":"正常","createTime":"2020-04-24 13:20:09","breastType":"过渡乳","protein":"1.52","fat":"3.80","mineral":"0.29","age":"3个月零4周","energy":"63.66"}]
      */

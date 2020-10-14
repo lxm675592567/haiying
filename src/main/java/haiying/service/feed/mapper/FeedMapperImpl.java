@@ -150,10 +150,11 @@ public class FeedMapperImpl implements FeedMapper {
         }
     }
 
+
     @Override
-    public JSONObject getDailyRecord(String guid, String type) {
+    public JSONObject getDailyRecord(String guid, String type, String id) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-            return getFeedMapperr(sqlSession).getDailyRecord(guid,type);
+            return getFeedMapperr(sqlSession).getDailyRecord(guid,type,id);
         }
     }
 }

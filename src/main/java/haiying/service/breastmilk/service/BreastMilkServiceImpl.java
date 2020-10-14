@@ -47,7 +47,6 @@ public class BreastMilkServiceImpl implements BreastMilkService{
         breastMilkMapper.saveBreastMilk(breastMilk);
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-
         JSONObject oneNew = recordMapper.findOneNew(guid);
         String ptGuid = oneNew.getString("ptGuid");
 
@@ -59,9 +58,6 @@ public class BreastMilkServiceImpl implements BreastMilkService{
         historicalDataDTO.setDevicType("ky.stl.chirld.mr");
         String postUrl = HttpclientUtil.get("httpclient.ptInfo.post");
         HttpclientUtil.httpPost(postUrl, JSON.parseObject(JSON.toJSONString(historicalDataDTO)));
-
-        System.out.println(historicalDataDTO);
-
 
         return breastMilk;
     }

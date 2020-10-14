@@ -161,7 +161,7 @@ public interface FeedMapper {
         "(SELECT t.typeName,SUM(t.spacing) spacing FROM (SELECT typeName,TIMESTAMPDIFF(MINUTE,createTime,endTime) spacing FROM feed WHERE  TYPE =6 AND guid = #{guid} AND DATE_SUB(CURDATE(), INTERVAL 6 DAY) <= DATE(createTime))t )")
     List<JSONObject> getArchivesRecord(String guid);
 
-    @Select("SELECT type,typeName,TIMESTAMPDIFF(MINUTE,createTime,endTime) spacing FROM feed WHERE  type = #{type} AND guid=#{guid} LIMIT 1")
-    JSONObject getDailyRecord(String guid,String type);
+    @Select("SELECT type,typeName,TIMESTAMPDIFF(MINUTE,createTime,endTime) spacing FROM feed WHERE  type = #{type} AND guid=#{guid} AND id=#{id} LIMIT 1")
+    JSONObject getDailyRecord(String guid,String type,String id);
 }
 
