@@ -21,7 +21,7 @@ public interface FeedMapper {
     @Update("update feed set typeName=#{typeName},type=#{type},lactation=#{lactation},createTime=#{createTime},endTime=#{endTime},duration=#{duration},nurseContent=#{nurseContent},foodName=#{foodName},foodDescribe=#{foodDescribe},foodPhoto=#{foodPhoto},selectType=#{selectType},selectTypeName=#{selectTypeName},urineShape=#{urineShape},shitShape=#{shitShape} where guid=#{guid} and createTime=#{createTime}")
     void updateTime(Feed feed);
 
-    @Select("select guid ,typeName ,type,lactation,DATE_FORMAT(createTime,'%Y-%m-%d %H:%i') createTime,DATE_FORMAT(endTime,'%Y-%m-%d %H:%i') endTime,duration,nurseContent,foodName,foodPhoto,selectType,selectTypeName,urineShape,shitShape,foodDescribe,shapeType from feed where guid=#{guid} and createTime like CONCAT('%',#{createTime},'%') ORDER BY createTime DESC")
+    @Select("select id,guid ,typeName ,type,lactation,DATE_FORMAT(createTime,'%Y-%m-%d %H:%i') createTime,DATE_FORMAT(endTime,'%Y-%m-%d %H:%i') endTime,duration,nurseContent,foodName,foodPhoto,selectType,selectTypeName,urineShape,shitShape,foodDescribe,shapeType from feed where guid=#{guid} and createTime like CONCAT('%',#{createTime},'%') ORDER BY createTime DESC")
     List<JSONObject> getFeedTodayList(String guid, String createTime);
 
     @Select(" SELECT a.typeName,a.lactation,a.createTime,a.endTime,a.duration,a.selectTypeName,a.urineShape,a.shitShape FROM feed a WHERE a.createTime = (SELECT createtime FROM feed WHERE TYPE = 1 LIMIT 1) AND a.guid = #{guid} AND a.type = 1 \n" +
