@@ -92,6 +92,13 @@ public class RecordMapperImpl implements RecordMapper {
         }
     }
 
+    @Override
+    public JSONObject findOneOpenId(String openId) {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            return getRecordMapperr(sqlSession).findOneNew(openId);
+        }
+    }
+
     private RecordMapper getRecordMapperr(SqlSession sqlSession) {
         return sqlSession.getMapper(RecordMapper.class);
     }

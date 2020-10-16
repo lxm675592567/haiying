@@ -58,5 +58,8 @@ public interface RecordMapper {
             "</when>",
             "</script>"})
     List<JSONObject> findSingle(@Param(value="openId")String openId);
+
+    @Select("select guid guid,cardId cardId,name name,sex sex,idnumber idnumber,DATE_FORMAT(birthday,'%Y-%m-%d') birthday,unionId unionId,DATE_FORMAT(createTime,'%Y-%m-%d') createTime,status status,openId openId,onlyChild onlyChild,pregnantWeek pregnantWeek,IFNULL(avatar,'')  avatar,birthHeight birthHeight,birthWeight birthWeight,pregnancySecond pregnancySecond,yieldSecond yieldSecond,address address,ptGuid ptGuid from record where openId=#{openId} LIMIT 1")
+    JSONObject findOneOpenId(String openId);
 }
 

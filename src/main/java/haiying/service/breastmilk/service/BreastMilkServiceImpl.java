@@ -47,7 +47,7 @@ public class BreastMilkServiceImpl implements BreastMilkService{
         breastMilkMapper.saveBreastMilk(breastMilk);
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        JSONObject oneNew = recordMapper.findOneNew(guid);
+        JSONObject oneNew = recordMapper.findOneOpenId(openId);
         String ptGuid = oneNew.getString("ptGuid");
 
         HistoricalDataDTO historicalDataDTO = new HistoricalDataDTO();
