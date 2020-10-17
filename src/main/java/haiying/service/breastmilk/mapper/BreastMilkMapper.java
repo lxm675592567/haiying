@@ -14,8 +14,8 @@ import java.util.List;
 public interface BreastMilkMapper {
 
 
-    @Insert("insert into breast_milk (id,openId,breastType,fat,lactose,protein,energy,water,mineral,density,createTime) " +
-            "values(#{id},#{openId},#{breastType},#{fat},#{lactose},#{protein},#{energy},#{water},#{mineral},#{density},#{createTime})")
+    @Insert("insert into breast_milk (id,openId,breastType,fat,lactose,protein,energy,water,mineral,density,createTime,guid) " +
+            "values(#{id},#{openId},#{breastType},#{fat},#{lactose},#{protein},#{energy},#{water},#{mineral},#{density},#{createTime},#{guid})")
     void saveBreastMilk(BreastMilk breastMilk);
 
     @Select("SELECT id, openId,breastType,fat,lactose,protein,energy,water,mineral,density,createTime FROM breast_milk WHERE  openId = #{openId} ORDER BY createtime DESC limit #{pageNum},#{pageSize} ")
