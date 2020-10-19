@@ -46,18 +46,22 @@ public class BreastMilkServiceImpl implements BreastMilkService{
         breastMilk.setCreateTime(ft.format(date));
         breastMilkMapper.saveBreastMilk(breastMilk);
 
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        JSONObject oneNew = recordMapper.findOneNew(guid);
-        String ptGuid = oneNew.getString("ptGuid");
+        List<Record> babyArchives = recordMapper.getBabyArchives(openId);
+        for (Record babyArchive : babyArchives) {
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            /*JSONObject oneNew = recordMapper.findOneNew(babyArchive.getGuid());
+            String ptGuid = oneNew.getString("ptGuid");*/
+            String ptGuid = babyArchive.getPtGuid();
 
-        HistoricalDataDTO historicalDataDTO = new HistoricalDataDTO();
-        historicalDataDTO.setBgdname(df.format(new Date())+"母乳数据");
-        historicalDataDTO.setData(JSONObject.parseObject(JSON.toJSONString(breastMilk)));
-        historicalDataDTO.setDataGuid(UUID.randomUUID().toString().replace("-", ""));
-        historicalDataDTO.setHzguid(ptGuid);
-        historicalDataDTO.setDevicType("ky.stl.chirld.mr");
-        String postUrl = HttpclientUtil.get("httpclient.ptInfo.post");
-        HttpclientUtil.httpPost(postUrl, JSON.parseObject(JSON.toJSONString(historicalDataDTO)));
+            HistoricalDataDTO historicalDataDTO = new HistoricalDataDTO();
+            historicalDataDTO.setBgdname(df.format(new Date())+"母乳数据");
+            historicalDataDTO.setData(JSONObject.parseObject(JSON.toJSONString(breastMilk)));
+            historicalDataDTO.setDataGuid(UUID.randomUUID().toString().replace("-", ""));
+            historicalDataDTO.setHzguid(ptGuid);
+            historicalDataDTO.setDevicType("ky.stl.chirld.mr");
+            String postUrl = HttpclientUtil.get("httpclient.ptInfo.post");
+            HttpclientUtil.httpPost(postUrl, JSON.parseObject(JSON.toJSONString(historicalDataDTO)));
+        }
 
         return breastMilk;
     }
